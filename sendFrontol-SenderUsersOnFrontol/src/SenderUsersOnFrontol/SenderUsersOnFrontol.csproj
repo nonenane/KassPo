@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{591537DC-E5B3-4725-B713-719FD14253BC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SenderUsersOnFrontol</RootNamespace>
+    <AssemblyName>SenderUsersOnFrontol</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\..\DLL\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Framework">
+      <HintPath>..\..\..\DLL\Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="IPAddressControlLib">
+      <HintPath>..\..\..\DLL\IPAddressControlLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="CopyMethods.cs" />
+    <Compile Include="dirPost\frmAddPost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dirPost\frmAddPost.Designer.cs">
+      <DependentUpon>frmAddPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dirPost\frmDirPost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dirPost\frmDirPost.Designer.cs">
+      <DependentUpon>frmDirPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dirTerminal\frmAddTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dirTerminal\frmAddTerminal.Designer.cs">
+      <DependentUpon>frmAddTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dirUsers\frmAddUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dirUsers\frmAddUser.Designer.cs">
+      <DependentUpon>frmAddUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogLoadDatat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogLoadDatat.Designer.cs">
+      <DependentUpon>frmLogLoadDatat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dirTerminal\frmTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dirTerminal\frmTerminal.Designer.cs">
+      <DependentUpon>frmTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPassWord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPassWord.Designer.cs">
+      <DependentUpon>frmPassWord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSendData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSendData.Designer.cs">
+      <DependentUpon>frmSendData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\TransactionProcedures.cs" />
+    <Compile Include="readSQL.cs" />
+    <Compile Include="ShareConnect.cs" />
+    <Compile Include="StrageCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Transactions\TransactionConnect.cs" />
+    <EmbeddedResource Include="dirPost\frmAddPost.resx">
+      <DependentUpon>frmAddPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dirPost\frmDirPost.resx">
+      <DependentUpon>frmDirPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dirTerminal\frmAddTerminal.resx">
+      <DependentUpon>frmAddTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dirTerminal\frmTerminal.resx">
+      <DependentUpon>frmTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dirUsers\frmAddUser.resx">
+      <DependentUpon>frmAddUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogLoadDatat.resx">
+      <DependentUpon>frmLogLoadDatat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPassWord.resx">
+      <DependentUpon>frmPassWord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSendData.resx">
+      <DependentUpon>frmSendData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493047028_Circle_Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493047040_Circle_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493047052_Circle_Red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493047076_Circle_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493746719_shopping cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1493746822_basket.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eye_quick_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter_data.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gtk-print-report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Internet-explorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\old-edit-find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\old-edit-redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\old-edit-undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove-ticket1-.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scanner2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\svn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trashcan-delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x-office-spreadsheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomin-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomout-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\update.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
