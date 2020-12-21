@@ -37,6 +37,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewDiscountGoods));
             this.label3 = new System.Windows.Forms.Label();
             this.cmbOtdel = new System.Windows.Forms.ComboBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
@@ -371,6 +372,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.dgvMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.Name = "frmViewDiscountGoods";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

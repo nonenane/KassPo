@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nwuram.Framework.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,10 @@ namespace ViewSalesPromProducts
     {
         private DataTable dtTovar;
         public string ean { set; private get; }
+
+        public decimal Price { set; private get; }
+        public decimal SalePrice { set; private get; }
+
         public frmDel()
         {
             InitializeComponent();
@@ -87,16 +92,16 @@ namespace ViewSalesPromProducts
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            decimal price;
+            decimal PriceEnd;
 
-            if (!decimal.TryParse(tbRealPrice.Text, out price))
+            if (!decimal.TryParse(tbRealPrice.Text, out PriceEnd))
             {
                 MessageBox.Show(Config.centralText($"Необходимо заполнить\n \"{label3.Text}\"\n"), "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbRealPrice.Focus();
                 return;
             }
 
-            if (price == 0)
+            if (PriceEnd == 0)
             {
                 MessageBox.Show(Config.centralText($"\"{label3.Text}\" должно быть больше 0\n"), "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbRealPrice.Focus();
@@ -117,9 +122,19 @@ namespace ViewSalesPromProducts
             if (DialogResult.No == MessageBox.Show(Config.centralText($"Цена будет отправлена на кассы.\nПродолжить?\n"), "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                 return;
 
-            DataTable dtResult = Config.connectMain.setCatalogPromotionalTovars(id_tovar, price, price, true);
+            DataTable dtResult = Config.connectMain.setCatalogPromotionalTovars(id_tovar, PriceEnd, PriceEnd, true);
 
-            dtResult = Config.connectMainKassRealiz.setGoodsUpdate(id_deps, nds, id_grp1, ntypeorg, decimal.ToInt32((price * 100)), cName.Trim(), ean.Trim());
+            dtResult = Config.connectMainKassRealiz.setGoodsUpdate(id_deps, nds, id_grp1, ntypeorg, decimal.ToInt32((PriceEnd * 100)), cName.Trim(), ean.Trim());
+
+            Logging.StartFirstLevel(680);
+            Logging.Comment($"ID:{dtResult.Rows[0]["id"]}");
+            Logging.Comment($"EAN:{ean.Trim()}; Наименование:{cName.Trim()}");
+            Logging.Comment($"Цена без ограничений:{Price.ToString("0.00")}");
+            Logging.Comment($"Акционная цена товара:{SalePrice.ToString("0.00")}");
+            Logging.Comment($"Новая цена товара после окончания акции:{PriceEnd.ToString("0.00")}");
+            Logging.Comment("Новая цена товара (после окончания акции) отправлена на кассы");
+            Logging.StopFirstLevel();
+
 
             MessageBox.Show("Данные сохранены.", "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;

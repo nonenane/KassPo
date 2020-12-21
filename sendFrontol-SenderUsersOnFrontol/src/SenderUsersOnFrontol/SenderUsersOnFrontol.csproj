@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>xpos.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus">
       <HintPath>..\..\..\DLL\EPPlus.dll</HintPath>
@@ -252,6 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="xpos.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -237,5 +237,10 @@ namespace ViewSalesPromProducts
         {
             setFilter();
         }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new frmSetting().ShowDialog();
+        }
     }
 }

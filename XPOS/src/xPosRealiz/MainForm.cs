@@ -10,6 +10,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace xPosRealiz
 {
@@ -312,6 +313,9 @@ namespace xPosRealiz
 
         #endregion
 
+
+        #region "Таймер обновления"
+        private bool TimeStoper = false;
         private void setTimeToTimer()
         {
             int defaultValue = 5000;
@@ -329,7 +333,52 @@ namespace xPosRealiz
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            Task.Run(() => TimeTickUpdate());
         }
+
+        private async void TimeTickUpdate()
+        {
+            long timer = 30;
+            TimeSpan time = TimeSpan.FromSeconds(timer);
+            while (true)
+            {
+                if (!TimeStoper)
+                {
+                    //AppendText($"{time.TotalHours}:{time.TotalMinutes % 60}:{time.TotalSeconds % 60}");
+                    AppendText(time.ToString());
+                    if (time.TotalSeconds == 0)
+                        time = TimeSpan.FromSeconds(timer);
+
+                    Thread.Sleep(1000);
+                    time = time.Add(-TimeSpan.FromMilliseconds(1000));
+                }
+            }
+        }
+        
+        private delegate void AppendListHandler(string sLog);
+        private void AppendText(string sLog)
+        {
+            if (lTimeTickUpdate.InvokeRequired)
+                lTimeTickUpdate.Invoke(new AppendListHandler(AppendText),
+                                    new object[] { sLog });
+            else
+                lTimeTickUpdate.Text = ($"До обновления:{sLog}");
+        }
+      
+        private void btStopTimer_Click(object sender, EventArgs e)
+        {
+            btStartTimer.Enabled = true;
+            btStopTimer.Enabled = false;
+            TimeStoper = true;
+        }
+
+        private void btStartTimer_Click(object sender, EventArgs e)
+        {
+            btStartTimer.Enabled = false;
+            btStopTimer.Enabled = true;
+            TimeStoper = false;
+        }
+
+        #endregion
     }
 }

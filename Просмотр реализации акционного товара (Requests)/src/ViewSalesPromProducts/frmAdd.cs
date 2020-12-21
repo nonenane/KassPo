@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nwuram.Framework.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,10 +19,22 @@ namespace ViewSalesPromProducts
 
         private int id_tovar, id_deps, nds, ntypeorg, id_grp1;
         private bool isLoadData, isValidate,isExit;
+        private bool isUserEan4 = false;
 
         public frmAdd()
         {
             InitializeComponent();
+
+            DataTable dtData = Config.connectMain.getSettings("pfu1");
+            if (dtData != null && dtData.Rows.Count > 0 && dtData.Rows[0]["value"] != null)
+            {
+                bool valueDec;
+                if (bool.TryParse(dtData.Rows[0]["value"].ToString(), out valueDec))
+                {
+                    isUserEan4 = valueDec;
+                }
+            }
+
         }
 
         private void frmAdd_Load(object sender, EventArgs e)
@@ -139,7 +152,8 @@ namespace ViewSalesPromProducts
             tbEan.Modified = false;
             id_tovar = -1;
             btSave.Enabled = false;
-            if (tbEan.Text.Trim().Length != 4)
+            //if (tbEan.Text.Trim().Length != 4)
+            if(isUserEan4 || tbEan.Text.Trim().Length != 4)
             {
                 Int64 inInt;
                 if (!Int64.TryParse(tbEan.Text, out inInt))
@@ -152,7 +166,8 @@ namespace ViewSalesPromProducts
             }
             else
             {
-                MessageBox.Show(Config.centralText("Необходимо ввести EAN для штучного товара\n"), "Получение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(Config.centralText("Необходимо ввести EAN для штучного товара\n"), "Получение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Config.centralText("Создание акций на весовой товар запрещено!\n"), "Получение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tbName.Clear();
                 tbEan.Clear();
                 if (isExit) Close();
@@ -239,7 +254,31 @@ namespace ViewSalesPromProducts
 
             DataTable dtResult = Config.connectMain.setCatalogPromotionalTovars(id_tovar, price, discountPrice, false);
 
-            dtResult = Config.connectMainKassRealiz.setGoodsUpdate(id_deps, nds, id_grp1, ntypeorg, decimal.ToInt32((price * 100)), tbName.Text.Trim(), tbEan.Text.Trim());
+            DataTable dtResult1 = Config.connectMainKassRealiz.setGoodsUpdate(id_deps, nds, id_grp1, ntypeorg, decimal.ToInt32((price * 100)), tbName.Text.Trim(), tbEan.Text.Trim());
+
+            if (ean == null)
+            {
+                Logging.StartFirstLevel(678);
+                Logging.Comment($"ID:{dtResult1.Rows[0]["id"]}");
+                Logging.Comment($"EAN:{tbEan.Text.Trim()}; Наименование:{tbName.Text.Trim()}");
+                Logging.Comment($"Цена без ограничений: {tbRealPrice.Text}");
+                Logging.Comment($"Акционная цена товара: {tbDiscountPrice.Text}");
+                Logging.Comment("Акционная цена товара отправлена на кассы");
+                Logging.StopFirstLevel();
+            }
+            else
+            {
+
+                Logging.StartFirstLevel(679);
+                Logging.Comment($"ID:{dtResult1.Rows[0]["id"]}");
+                Logging.Comment($"EAN:{tbEan.Text.Trim()}; Наименование:{tbName.Text.Trim()}");
+                Logging.VariableChange($"Цена без ограничений",tbRealPrice.Text,Price.ToString("0.00"));
+                Logging.VariableChange($"Акционная цена товара", tbDiscountPrice.Text, SalePrice.ToString("0.00"));
+                Logging.Comment("Акционная цена товара отправлена на кассы");
+                Logging.StopFirstLevel();
+            }
+
+
 
             MessageBox.Show("Данные сохранены.", "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;

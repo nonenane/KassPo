@@ -29,37 +29,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.cbOnline = new System.Windows.Forms.CheckBox();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.dgvMonitoring = new System.Windows.Forms.DataGridView();
-            this.dtpDate = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pnlSending = new System.Windows.Forms.Panel();
-            this.pnlSent = new System.Windows.Forms.Panel();
-            this.pnlError = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dgvTerminals = new System.Windows.Forms.DataGridView();
-            this.terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time_update = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_status_terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timer = new System.Windows.Forms.Timer(this.components);
-            this.timer_message = new System.Windows.Forms.Timer(this.components);
             this.id_goods_updates = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dep_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ean = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,7 +55,23 @@
             this.not_sent_terminals = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.time_send = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pnlSending = new System.Windows.Forms.Panel();
+            this.pnlSent = new System.Windows.Forms.Panel();
+            this.pnlError = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dgvTerminals = new System.Windows.Forms.DataGridView();
+            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.timer_message = new System.Windows.Forms.Timer(this.components);
             this.btnPrint = new System.Windows.Forms.Button();
+            this.terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTypeTerminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time_update = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_status_terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonitoring)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTerminals)).BeginInit();
             this.SuspendLayout();
@@ -87,7 +89,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(798, 595);
+            this.btnExit.Location = new System.Drawing.Point(893, 595);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(108, 23);
             this.btnExit.TabIndex = 44;
@@ -97,7 +99,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(684, 595);
+            this.btnRefresh.Location = new System.Drawing.Point(779, 595);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(108, 23);
             this.btnRefresh.TabIndex = 43;
@@ -112,14 +114,14 @@
             this.dgvMonitoring.AllowUserToResizeRows = false;
             this.dgvMonitoring.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMonitoring.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMonitoring.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMonitoring.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMonitoring.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMonitoring.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id_goods_updates,
@@ -131,27 +133,109 @@
             this.not_sent_terminals,
             this.time_send,
             this.id_status});
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMonitoring.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMonitoring.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMonitoring.Location = new System.Drawing.Point(8, 35);
             this.dgvMonitoring.Name = "dgvMonitoring";
             this.dgvMonitoring.ReadOnly = true;
             this.dgvMonitoring.RowHeadersVisible = false;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvMonitoring.RowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvMonitoring.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvMonitoring.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMonitoring.Size = new System.Drawing.Size(659, 549);
             this.dgvMonitoring.TabIndex = 42;
             this.dgvMonitoring.CurrentCellChanged += new System.EventHandler(this.dgvMonitoring_CurrentCellChanged);
             this.dgvMonitoring.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvPrices_RowPostPaint);
             this.dgvMonitoring.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvPrices_RowPrePaint);
+            // 
+            // id_goods_updates
+            // 
+            this.id_goods_updates.DataPropertyName = "id_goods_updates";
+            this.id_goods_updates.HeaderText = "id_goods_updates";
+            this.id_goods_updates.Name = "id_goods_updates";
+            this.id_goods_updates.ReadOnly = true;
+            this.id_goods_updates.Visible = false;
+            // 
+            // dep_name
+            // 
+            this.dep_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dep_name.DataPropertyName = "dep_name";
+            this.dep_name.HeaderText = "Отдел";
+            this.dep_name.Name = "dep_name";
+            this.dep_name.ReadOnly = true;
+            this.dep_name.Width = 85;
+            // 
+            // ean
+            // 
+            this.ean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ean.DataPropertyName = "ean";
+            this.ean.HeaderText = "EAN";
+            this.ean.Name = "ean";
+            this.ean.ReadOnly = true;
+            this.ean.Width = 90;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "Название";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            // 
+            // old_price
+            // 
+            this.old_price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.old_price.DataPropertyName = "old_price";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.old_price.DefaultCellStyle = dataGridViewCellStyle2;
+            this.old_price.HeaderText = "Старая цена";
+            this.old_price.Name = "old_price";
+            this.old_price.ReadOnly = true;
+            this.old_price.Width = 60;
+            // 
+            // price
+            // 
+            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.price.DataPropertyName = "price";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.price.DefaultCellStyle = dataGridViewCellStyle3;
+            this.price.HeaderText = "Новая цена";
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
+            this.price.Width = 60;
+            // 
+            // not_sent_terminals
+            // 
+            this.not_sent_terminals.DataPropertyName = "not_sent_terminals";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.not_sent_terminals.DefaultCellStyle = dataGridViewCellStyle4;
+            this.not_sent_terminals.HeaderText = "Кассы, до которых не дошли цены";
+            this.not_sent_terminals.Name = "not_sent_terminals";
+            this.not_sent_terminals.ReadOnly = true;
+            // 
+            // time_send
+            // 
+            this.time_send.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.time_send.DataPropertyName = "time_send";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.time_send.DefaultCellStyle = dataGridViewCellStyle5;
+            this.time_send.HeaderText = "Время отправки на кассы";
+            this.time_send.Name = "time_send";
+            this.time_send.ReadOnly = true;
+            // 
+            // id_status
+            // 
+            this.id_status.DataPropertyName = "id_status";
+            this.id_status.HeaderText = "id_status";
+            this.id_status.Name = "id_status";
+            this.id_status.ReadOnly = true;
+            this.id_status.Visible = false;
             // 
             // dtpDate
             // 
@@ -232,55 +316,83 @@
             this.dgvTerminals.AllowUserToResizeRows = false;
             this.dgvTerminals.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTerminals.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvTerminals.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTerminals.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvTerminals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTerminals.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.terminal,
+            this.cTypeTerminal,
             this.time_update,
             this.comment,
             this.id_status_terminal});
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTerminals.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTerminals.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvTerminals.Location = new System.Drawing.Point(673, 35);
             this.dgvTerminals.Name = "dgvTerminals";
             this.dgvTerminals.ReadOnly = true;
             this.dgvTerminals.RowHeadersVisible = false;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvTerminals.RowsDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvTerminals.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvTerminals.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTerminals.Size = new System.Drawing.Size(233, 549);
+            this.dgvTerminals.Size = new System.Drawing.Size(328, 549);
             this.dgvTerminals.TabIndex = 52;
             this.dgvTerminals.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvTerminals_RowPostPaint);
             this.dgvTerminals.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTerminals_RowPrePaint);
             // 
+            // timer
+            // 
+            this.timer.Interval = 600000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // timer_message
+            // 
+            this.timer_message.Interval = 600000;
+            this.timer_message.Tick += new System.EventHandler(this.timer_message_Tick);
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(654, 595);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(108, 23);
+            this.btnPrint.TabIndex = 53;
+            this.btnPrint.Text = "В Excel";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
             // terminal
             // 
             this.terminal.DataPropertyName = "terminal";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.terminal.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.terminal.DefaultCellStyle = dataGridViewCellStyle9;
             this.terminal.HeaderText = "Касса";
             this.terminal.Name = "terminal";
             this.terminal.ReadOnly = true;
             // 
+            // cTypeTerminal
+            // 
+            this.cTypeTerminal.DataPropertyName = "NameType";
+            this.cTypeTerminal.HeaderText = "Тип кассы";
+            this.cTypeTerminal.Name = "cTypeTerminal";
+            this.cTypeTerminal.ReadOnly = true;
+            // 
             // time_update
             // 
             this.time_update.DataPropertyName = "time_update";
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.time_update.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.time_update.DefaultCellStyle = dataGridViewCellStyle10;
             this.time_update.HeaderText = "Время получения данных";
             this.time_update.Name = "time_update";
             this.time_update.ReadOnly = true;
@@ -301,113 +413,11 @@
             this.id_status_terminal.ReadOnly = true;
             this.id_status_terminal.Visible = false;
             // 
-            // timer
-            // 
-            this.timer.Interval = 600000;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
-            // 
-            // timer_message
-            // 
-            this.timer_message.Interval = 600000;
-            this.timer_message.Tick += new System.EventHandler(this.timer_message_Tick);
-            // 
-            // id_goods_updates
-            // 
-            this.id_goods_updates.DataPropertyName = "id_goods_updates";
-            this.id_goods_updates.HeaderText = "id_goods_updates";
-            this.id_goods_updates.Name = "id_goods_updates";
-            this.id_goods_updates.ReadOnly = true;
-            this.id_goods_updates.Visible = false;
-            // 
-            // dep_name
-            // 
-            this.dep_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dep_name.DataPropertyName = "dep_name";
-            this.dep_name.HeaderText = "Отдел";
-            this.dep_name.Name = "dep_name";
-            this.dep_name.ReadOnly = true;
-            this.dep_name.Width = 85;
-            // 
-            // ean
-            // 
-            this.ean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ean.DataPropertyName = "ean";
-            this.ean.HeaderText = "EAN";
-            this.ean.Name = "ean";
-            this.ean.ReadOnly = true;
-            this.ean.Width = 90;
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "Название";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
-            // old_price
-            // 
-            this.old_price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.old_price.DataPropertyName = "old_price";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.old_price.DefaultCellStyle = dataGridViewCellStyle14;
-            this.old_price.HeaderText = "Старая цена";
-            this.old_price.Name = "old_price";
-            this.old_price.ReadOnly = true;
-            this.old_price.Width = 60;
-            // 
-            // price
-            // 
-            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.price.DataPropertyName = "price";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.price.DefaultCellStyle = dataGridViewCellStyle15;
-            this.price.HeaderText = "Новая цена";
-            this.price.Name = "price";
-            this.price.ReadOnly = true;
-            this.price.Width = 60;
-            // 
-            // not_sent_terminals
-            // 
-            this.not_sent_terminals.DataPropertyName = "not_sent_terminals";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.not_sent_terminals.DefaultCellStyle = dataGridViewCellStyle16;
-            this.not_sent_terminals.HeaderText = "Кассы, до которых не дошли цены";
-            this.not_sent_terminals.Name = "not_sent_terminals";
-            this.not_sent_terminals.ReadOnly = true;
-            // 
-            // time_send
-            // 
-            this.time_send.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.time_send.DataPropertyName = "time_send";
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.time_send.DefaultCellStyle = dataGridViewCellStyle17;
-            this.time_send.HeaderText = "Время отправки на кассы";
-            this.time_send.Name = "time_send";
-            this.time_send.ReadOnly = true;
-            // 
-            // id_status
-            // 
-            this.id_status.DataPropertyName = "id_status";
-            this.id_status.HeaderText = "id_status";
-            this.id_status.Name = "id_status";
-            this.id_status.ReadOnly = true;
-            this.id_status.Visible = false;
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.Location = new System.Drawing.Point(559, 595);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(108, 23);
-            this.btnPrint.TabIndex = 53;
-            this.btnPrint.Text = "В Excel";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 625);
+            this.ClientSize = new System.Drawing.Size(1013, 625);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.dgvTerminals);
             this.Controls.Add(this.label4);
@@ -423,9 +433,9 @@
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Мониторинг отправки цен на кассы";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -451,10 +461,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvTerminals;
-        private System.Windows.Forms.DataGridViewTextBoxColumn terminal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn time_update;
-        private System.Windows.Forms.DataGridViewTextBoxColumn comment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_status_terminal;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Timer timer_message;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_goods_updates;
@@ -467,6 +473,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn time_send;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_status;
         private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn terminal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeTerminal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time_update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn comment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_status_terminal;
     }
 }
 

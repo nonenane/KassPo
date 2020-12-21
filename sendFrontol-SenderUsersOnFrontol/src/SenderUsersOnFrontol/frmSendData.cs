@@ -11,9 +11,9 @@ namespace SenderUsersOnFrontol
 {
     public partial class frmSendData : Form
     {
-        public bool setIsSelectedTerminal()
+        public bool GetDelUsers()
         {
-            return rbSelected.Checked;
+            return chbDelOldUser.Checked;
         }
         public DataTable setData()
         {
@@ -25,9 +25,11 @@ namespace SenderUsersOnFrontol
             //}
             return dtTmp;
         }
+      
         public frmSendData()
         {
             InitializeComponent();
+            GetTerminalType();
             dgvTerminal.AutoGenerateColumns = false;
             getData();
             //rbSelected_CheckedChanged(null, null);
@@ -151,6 +153,52 @@ namespace SenderUsersOnFrontol
 
             }
             dtData.AcceptChanges();
+        }
+
+        private void GetTerminalType()
+        {
+            DataTable dtTerminalType = Config.hCntMain.GetTerminalType(true);
+            cmbTerminalType.DataSource = dtTerminalType;
+            cmbTerminalType.ValueMember = "id";
+            cmbTerminalType.DisplayMember = "NameTerminalType";
+        }
+
+        private void cmbTerminalType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            FilterTerminal();
+        }
+
+        private void FilterTerminal()
+        {
+            try
+            {
+                string str = "";
+
+                if ((byte)cmbTerminalType.SelectedValue != 0)
+                    str += (str.Trim().Length == 0 ? "" : " and ") + $"id_TerminalType = {cmbTerminalType.SelectedValue}";
+
+                dtData.DefaultView.RowFilter = str;
+                //dtData.DefaultView.Count != 0;
+            }
+            catch
+            {
+                dtData.DefaultView.RowFilter = "id = -9999";
+                //dtData.DefaultView.Count != 0;
+            }
+            //dgvTerminal_SelectionChanged(null, null);
+        }
+
+        private void chbDelOldUser_Click(object sender, EventArgs e)
+        {
+            if (chbDelOldUser.Checked)
+            {
+                frmPassWord fPass = new frmPassWord();
+                if (DialogResult.Cancel == fPass.ShowDialog())
+                {
+                    chbDelOldUser.Checked = false;
+                    return;
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nwuram.Framework.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -283,8 +284,10 @@ namespace ViewSalesPromProducts
             if (DialogResult.No == MessageBox.Show(Config.centralText("Удалить выбранную акцию?\n"), "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)) return;
 
             string ean = (string)dtData.DefaultView[dgvMain.CurrentRow.Index]["ean"];
+            decimal Price = (decimal)dtData.DefaultView[dgvMain.CurrentRow.Index]["PriceRealK21"];
+            decimal SalePrice = (decimal)dtData.DefaultView[dgvMain.CurrentRow.Index]["PriceDiscountK21"];
 
-            if (DialogResult.OK == new frmDel() {ean = ean}.ShowDialog())
+            if (DialogResult.OK == new frmDel() { ean = ean, Price = Price, SalePrice = SalePrice }.ShowDialog())
                 getData();
         }
 
@@ -297,6 +300,13 @@ namespace ViewSalesPromProducts
 
         private void btPrint_Click(object sender, EventArgs e)
         {
+            Logging.StartFirstLevel(79);
+
+            Logging.Comment("Произведена выгрузка отчета со следующими параметрами");
+            Logging.Comment($"Отдел ID:{cmbOtdel.SelectedValue}; Наименование:{cmbOtdel.Text}");
+            Logging.Comment($"Кол-во записей:{dtData.DefaultView.Count}");
+            Logging.StopFirstLevel();
+
 
             report = new Nwuram.Framework.ToExcelNew.ExcelUnLoad();
 

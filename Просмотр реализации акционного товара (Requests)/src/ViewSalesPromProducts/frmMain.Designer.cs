@@ -40,6 +40,14 @@
             this.dtpDateStart = new System.Windows.Forms.DateTimePicker();
             this.dtpDateEnd = new System.Windows.Forms.DateTimePicker();
             this.dgvMain = new System.Windows.Forms.DataGridView();
+            this.cDeps = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_tovar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.summa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -53,21 +61,16 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbOtdel = new System.Windows.Forms.ComboBox();
-            this.cDeps = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_tovar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.summa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtpDateStart
             // 
-            this.dtpDateStart.Location = new System.Drawing.Point(61, 32);
+            this.dtpDateStart.Location = new System.Drawing.Point(61, 56);
             this.dtpDateStart.Name = "dtpDateStart";
             this.dtpDateStart.Size = new System.Drawing.Size(139, 20);
             this.dtpDateStart.TabIndex = 0;
@@ -75,7 +78,7 @@
             // 
             // dtpDateEnd
             // 
-            this.dtpDateEnd.Location = new System.Drawing.Point(276, 32);
+            this.dtpDateEnd.Location = new System.Drawing.Point(276, 56);
             this.dtpDateEnd.Name = "dtpDateEnd";
             this.dtpDateEnd.Size = new System.Drawing.Size(139, 20);
             this.dtpDateEnd.TabIndex = 1;
@@ -110,7 +113,7 @@
             this.count,
             this.price,
             this.summa});
-            this.dgvMain.Location = new System.Drawing.Point(12, 86);
+            this.dgvMain.Location = new System.Drawing.Point(12, 110);
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.ReadOnly = true;
             dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -124,137 +127,9 @@
             this.dgvMain.RowHeadersVisible = false;
             this.dgvMain.RowHeadersWidth = 62;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(841, 310);
+            this.dgvMain.Size = new System.Drawing.Size(841, 327);
             this.dgvMain.TabIndex = 4;
             this.dgvMain.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvMain_Paint);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Дата с";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(222, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Дата по";
-            // 
-            // tbSearchCode
-            // 
-            this.tbSearchCode.Location = new System.Drawing.Point(118, 60);
-            this.tbSearchCode.Name = "tbSearchCode";
-            this.tbSearchCode.Size = new System.Drawing.Size(115, 20);
-            this.tbSearchCode.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.tbSearchCode, "поиск по коду товара");
-            this.tbSearchCode.TextChanged += new System.EventHandler(this.tbSearchCode_TextChanged);
-            this.tbSearchCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSearchCode_KeyPress);
-            // 
-            // tbSearchName
-            // 
-            this.tbSearchName.Location = new System.Drawing.Point(239, 60);
-            this.tbSearchName.Name = "tbSearchName";
-            this.tbSearchName.Size = new System.Drawing.Size(332, 20);
-            this.tbSearchName.TabIndex = 12;
-            this.toolTip1.SetToolTip(this.tbSearchName, "поиск по наменованию");
-            this.tbSearchName.TextChanged += new System.EventHandler(this.tbSearchName_TextChanged);
-            this.tbSearchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSearchName_KeyPress);
-            // 
-            // btnSettingProducts
-            // 
-            this.btnSettingProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSettingProducts.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.Set;
-            this.btnSettingProducts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSettingProducts.Location = new System.Drawing.Point(13, 410);
-            this.btnSettingProducts.Name = "btnSettingProducts";
-            this.btnSettingProducts.Size = new System.Drawing.Size(35, 35);
-            this.btnSettingProducts.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.btnSettingProducts, "Настройки акционного товара");
-            this.btnSettingProducts.UseVisualStyleBackColor = true;
-            this.btnSettingProducts.Visible = false;
-            this.btnSettingProducts.Click += new System.EventHandler(this.btnSettingProducts_Click);
-            // 
-            // btnPrintReport
-            // 
-            this.btnPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnPrintReport.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.klpq_2511;
-            this.btnPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnPrintReport.Location = new System.Drawing.Point(61, 410);
-            this.btnPrintReport.Name = "btnPrintReport";
-            this.btnPrintReport.Size = new System.Drawing.Size(35, 35);
-            this.btnPrintReport.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.btnPrintReport, "Выгрузка в Excel");
-            this.btnPrintReport.UseVisualStyleBackColor = true;
-            this.btnPrintReport.Click += new System.EventHandler(this.btnPrintReport_Click);
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.reload_8055;
-            this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnUpdate.Location = new System.Drawing.Point(818, 17);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(35, 35);
-            this.btnUpdate.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.btnUpdate, "Обновить");
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.exit_8633;
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnClose.Location = new System.Drawing.Point(818, 410);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(35, 35);
-            this.btnClose.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.btnClose, "Выход");
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 451);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(872, 22);
-            this.statusStrip1.TabIndex = 13;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 10);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Отдел";
-            // 
-            // cmbOtdel
-            // 
-            this.cmbOtdel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbOtdel.FormattingEnabled = true;
-            this.cmbOtdel.Location = new System.Drawing.Point(61, 6);
-            this.cmbOtdel.Margin = new System.Windows.Forms.Padding(2);
-            this.cmbOtdel.Name = "cmbOtdel";
-            this.cmbOtdel.Size = new System.Drawing.Size(189, 21);
-            this.cmbOtdel.TabIndex = 16;
-            this.cmbOtdel.SelectionChangeCommitted += new System.EventHandler(this.cmbOtdel_SelectionChangeCommitted);
             // 
             // cDeps
             // 
@@ -343,14 +218,160 @@
             this.summa.Name = "summa";
             this.summa.ReadOnly = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 59);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Дата с";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(222, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Дата по";
+            // 
+            // tbSearchCode
+            // 
+            this.tbSearchCode.Location = new System.Drawing.Point(118, 84);
+            this.tbSearchCode.Name = "tbSearchCode";
+            this.tbSearchCode.Size = new System.Drawing.Size(115, 20);
+            this.tbSearchCode.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.tbSearchCode, "поиск по коду товара");
+            this.tbSearchCode.TextChanged += new System.EventHandler(this.tbSearchCode_TextChanged);
+            this.tbSearchCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSearchCode_KeyPress);
+            // 
+            // tbSearchName
+            // 
+            this.tbSearchName.Location = new System.Drawing.Point(239, 84);
+            this.tbSearchName.Name = "tbSearchName";
+            this.tbSearchName.Size = new System.Drawing.Size(332, 20);
+            this.tbSearchName.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.tbSearchName, "поиск по наменованию");
+            this.tbSearchName.TextChanged += new System.EventHandler(this.tbSearchName_TextChanged);
+            this.tbSearchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSearchName_KeyPress);
+            // 
+            // btnSettingProducts
+            // 
+            this.btnSettingProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSettingProducts.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.Set;
+            this.btnSettingProducts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSettingProducts.Location = new System.Drawing.Point(13, 451);
+            this.btnSettingProducts.Name = "btnSettingProducts";
+            this.btnSettingProducts.Size = new System.Drawing.Size(35, 35);
+            this.btnSettingProducts.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btnSettingProducts, "Настройки акционного товара");
+            this.btnSettingProducts.UseVisualStyleBackColor = true;
+            this.btnSettingProducts.Visible = false;
+            this.btnSettingProducts.Click += new System.EventHandler(this.btnSettingProducts_Click);
+            // 
+            // btnPrintReport
+            // 
+            this.btnPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPrintReport.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.klpq_2511;
+            this.btnPrintReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPrintReport.Location = new System.Drawing.Point(61, 451);
+            this.btnPrintReport.Name = "btnPrintReport";
+            this.btnPrintReport.Size = new System.Drawing.Size(35, 35);
+            this.btnPrintReport.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.btnPrintReport, "Выгрузка в Excel");
+            this.btnPrintReport.UseVisualStyleBackColor = true;
+            this.btnPrintReport.Click += new System.EventHandler(this.btnPrintReport_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdate.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.reload_8055;
+            this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnUpdate.Location = new System.Drawing.Point(818, 41);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(35, 35);
+            this.btnUpdate.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.btnUpdate, "Обновить");
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.exit_8633;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnClose.Location = new System.Drawing.Point(818, 451);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(35, 35);
+            this.btnClose.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.btnClose, "Выход");
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 492);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(872, 22);
+            this.statusStrip1.TabIndex = 13;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 34);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Отдел";
+            // 
+            // cmbOtdel
+            // 
+            this.cmbOtdel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOtdel.FormattingEnabled = true;
+            this.cmbOtdel.Location = new System.Drawing.Point(61, 30);
+            this.cmbOtdel.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbOtdel.Name = "cmbOtdel";
+            this.cmbOtdel.Size = new System.Drawing.Size(189, 21);
+            this.cmbOtdel.TabIndex = 16;
+            this.cmbOtdel.SelectionChangeCommitted += new System.EventHandler(this.cmbOtdel_SelectionChangeCommitted);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.настройкиToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(872, 24);
+            this.menuStrip1.TabIndex = 18;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // настройкиToolStripMenuItem
+            // 
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(872, 473);
+            this.ClientSize = new System.Drawing.Size(872, 514);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmbOtdel);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tbSearchName);
             this.Controls.Add(this.tbSearchCode);
             this.Controls.Add(this.btnSettingProducts);
@@ -362,6 +383,7 @@
             this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.dtpDateEnd);
             this.Controls.Add(this.dtpDateStart);
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(880, 500);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -371,6 +393,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,6 +426,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn count;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
         private System.Windows.Forms.DataGridViewTextBoxColumn summa;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
     }
 }
 

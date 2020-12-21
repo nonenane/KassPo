@@ -50,7 +50,7 @@ namespace SenderUsersOnFrontol
                  new DbType[] { }, ap);
         }
 
-        public  DataTable setTerminal(int id, int Number, string IP, string Path, int type)
+        public  DataTable setTerminal(int id, int Number, string IP, string Path, int type,int idTerminalType)
         {
             ap.Clear();
             ap.Add(id);
@@ -59,9 +59,12 @@ namespace SenderUsersOnFrontol
             ap.Add(Path);
             ap.Add(type);
             ap.Add(Nwuram.Framework.Settings.User.UserSettings.User.Id);
+            ap.Add(idTerminalType);
+
+
             return executeProcedure("[sendFrontol].[setTerminal]",
-                 new string[] { "@id", "@Number", "@IP", "@Path", "@type", "@idUser" },
-                 new DbType[] { DbType.Int32, DbType.Int32, DbType.String, DbType.String, DbType.Int32, DbType.Int32 }, ap);
+                 new string[] { "@id", "@Number", "@IP", "@Path", "@type", "@idUser", "@idTerminalType" },
+                 new DbType[] { DbType.Int32, DbType.Int32, DbType.String, DbType.String, DbType.Int32, DbType.Int32, DbType.Int32 }, ap);
         }
         #endregion
 
@@ -218,5 +221,46 @@ namespace SenderUsersOnFrontol
                  new string[1] {"@prefixShop" },
                  new DbType[1] { DbType.String }, ap);
         }
+
+        public DataTable  GetTerminalType(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[sendFrontol].[getTerminalType]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["NameTerminalType"] = "Все Типы";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, NameTerminalType asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+            else
+            {
+                dtResult.DefaultView.Sort = "NameTerminalType asc";
+                dtResult = dtResult.DefaultView.ToTable().Copy();
+            }
+
+            return dtResult;
+        }
+
     }   
 }

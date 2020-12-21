@@ -32,13 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.timerRealiz = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rtbSprav = new System.Windows.Forms.RichTextBox();
+            this.lblSprav = new System.Windows.Forms.Label();
             this.btnResume = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
-            this.rtbSprav = new System.Windows.Forms.RichTextBox();
             this.btnCreate = new System.Windows.Forms.Button();
-            this.lblSprav = new System.Windows.Forms.Label();
             this.bwSparv = new System.ComponentModel.BackgroundWorker();
             this.bwFullSprav = new System.ComponentModel.BackgroundWorker();
+            this.lTimeTickUpdate = new System.Windows.Forms.Label();
+            this.btStartTimer = new System.Windows.Forms.Button();
+            this.btStopTimer = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,36 +56,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnResume);
-            this.panel1.Controls.Add(this.btnPause);
             this.panel1.Controls.Add(this.rtbSprav);
-            this.panel1.Controls.Add(this.btnCreate);
+            this.panel1.Controls.Add(this.btnResume);
             this.panel1.Controls.Add(this.lblSprav);
+            this.panel1.Controls.Add(this.btnPause);
             this.panel1.Location = new System.Drawing.Point(6, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(332, 478);
+            this.panel1.Size = new System.Drawing.Size(345, 639);
             this.panel1.TabIndex = 2;
-            // 
-            // btnResume
-            // 
-            this.btnResume.Enabled = false;
-            this.btnResume.Location = new System.Drawing.Point(238, 36);
-            this.btnResume.Name = "btnResume";
-            this.btnResume.Size = new System.Drawing.Size(81, 23);
-            this.btnResume.TabIndex = 10;
-            this.btnResume.Text = "Возобновить";
-            this.btnResume.UseVisualStyleBackColor = true;
-            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
-            // 
-            // btnPause
-            // 
-            this.btnPause.Location = new System.Drawing.Point(143, 36);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(75, 23);
-            this.btnPause.TabIndex = 9;
-            this.btnPause.Text = "Остановить";
-            this.btnPause.UseVisualStyleBackColor = true;
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // rtbSprav
             // 
@@ -91,19 +72,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbSprav.Location = new System.Drawing.Point(3, 74);
             this.rtbSprav.Name = "rtbSprav";
-            this.rtbSprav.Size = new System.Drawing.Size(324, 390);
+            this.rtbSprav.Size = new System.Drawing.Size(337, 551);
             this.rtbSprav.TabIndex = 8;
             this.rtbSprav.Text = "";
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Location = new System.Drawing.Point(15, 26);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(114, 42);
-            this.btnCreate.TabIndex = 7;
-            this.btnCreate.Text = "Выгрузить полный справочник";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // lblSprav
             // 
@@ -115,6 +86,37 @@
             this.lblSprav.TabIndex = 6;
             this.lblSprav.Text = "Справочник с обувью";
             // 
+            // btnResume
+            // 
+            this.btnResume.Enabled = false;
+            this.btnResume.Location = new System.Drawing.Point(20, 53);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(81, 23);
+            this.btnResume.TabIndex = 10;
+            this.btnResume.Text = "Возобновить";
+            this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(20, 26);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(81, 23);
+            this.btnPause.TabIndex = 9;
+            this.btnPause.Text = "Остановить";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Location = new System.Drawing.Point(367, 12);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(114, 42);
+            this.btnCreate.TabIndex = 7;
+            this.btnCreate.Text = "Выгрузить полный справочник";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
+            // 
             // bwSparv
             // 
             this.bwSparv.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSparv_DoWork);
@@ -125,12 +127,47 @@
             this.bwFullSprav.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwFullSprav_DoWork);
             this.bwFullSprav.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwFullSprav_RunWorkerCompleted);
             // 
+            // lTimeTickUpdate
+            // 
+            this.lTimeTickUpdate.AutoSize = true;
+            this.lTimeTickUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lTimeTickUpdate.Location = new System.Drawing.Point(367, 67);
+            this.lTimeTickUpdate.Name = "lTimeTickUpdate";
+            this.lTimeTickUpdate.Size = new System.Drawing.Size(87, 15);
+            this.lTimeTickUpdate.TabIndex = 11;
+            this.lTimeTickUpdate.Text = "До обновления";
+            // 
+            // btStartTimer
+            // 
+            this.btStartTimer.Enabled = false;
+            this.btStartTimer.Location = new System.Drawing.Point(367, 122);
+            this.btStartTimer.Name = "btStartTimer";
+            this.btStartTimer.Size = new System.Drawing.Size(81, 23);
+            this.btStartTimer.TabIndex = 12;
+            this.btStartTimer.Text = "Возобновить";
+            this.btStartTimer.UseVisualStyleBackColor = true;
+            this.btStartTimer.Click += new System.EventHandler(this.btStartTimer_Click);
+            // 
+            // btStopTimer
+            // 
+            this.btStopTimer.Location = new System.Drawing.Point(367, 95);
+            this.btStopTimer.Name = "btStopTimer";
+            this.btStopTimer.Size = new System.Drawing.Size(81, 23);
+            this.btStopTimer.TabIndex = 11;
+            this.btStopTimer.Text = "Остановить";
+            this.btStopTimer.UseVisualStyleBackColor = true;
+            this.btStopTimer.Click += new System.EventHandler(this.btStopTimer_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 474);
+            this.ClientSize = new System.Drawing.Size(1153, 635);
+            this.Controls.Add(this.btStartTimer);
+            this.Controls.Add(this.lTimeTickUpdate);
+            this.Controls.Add(this.btStopTimer);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnCreate);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(530, 10);
@@ -143,6 +180,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -157,7 +195,9 @@
         private System.Windows.Forms.Button btnResume;
         private System.Windows.Forms.Button btnPause;
         private System.ComponentModel.BackgroundWorker bwFullSprav;
-
+        private System.Windows.Forms.Label lTimeTickUpdate;
+        private System.Windows.Forms.Button btStartTimer;
+        private System.Windows.Forms.Button btStopTimer;
     }
 }
 

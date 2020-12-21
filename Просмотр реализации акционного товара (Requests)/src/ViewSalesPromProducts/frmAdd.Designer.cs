@@ -47,7 +47,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackgroundImage = global::ViewSalesPromProducts.Properties.Resources.exit_8633;
             this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnClose.Location = new System.Drawing.Point(361, 100);
+            this.btnClose.Location = new System.Drawing.Point(361, 105);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(35, 35);
             this.btnClose.TabIndex = 4;
@@ -60,7 +60,7 @@
             this.btSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btSave.Enabled = false;
             this.btSave.Image = global::ViewSalesPromProducts.Properties.Resources.save_edit;
-            this.btSave.Location = new System.Drawing.Point(320, 100);
+            this.btSave.Location = new System.Drawing.Point(320, 105);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(35, 35);
             this.btSave.TabIndex = 3;
@@ -171,7 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 148);
+            this.ClientSize = new System.Drawing.Size(415, 154);
             this.ControlBox = false;
             this.Controls.Add(this.tbDiscountPrice);
             this.Controls.Add(this.label6);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SenderUsersOnFrontol
 {
@@ -79,5 +80,13 @@ namespace SenderUsersOnFrontol
         public static string Password = "";
         public static string Folder = "";
         public static int Time = 0;
+
+        public static void SendUserToTerminal()
+        {
+            if (DialogResult.Yes == MessageBox.Show(centralText("Список пользователей был изменён.\nОтправить список пользователей\nна кассы?\n"), "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
+            { 
+            
+            }
+        }
     }
 }

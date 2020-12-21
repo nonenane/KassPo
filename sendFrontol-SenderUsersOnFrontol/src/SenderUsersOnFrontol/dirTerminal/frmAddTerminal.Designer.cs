@@ -39,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbNumberTerminal = new System.Windows.Forms.TextBox();
             this.tbIP = new IPAddressControlLib.IPAddressControl();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmbTerminalType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -66,7 +68,7 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSave.Image = global::SenderUsersOnFrontol.Properties.Resources.save_edit;
-            this.btSave.Location = new System.Drawing.Point(307, 94);
+            this.btSave.Location = new System.Drawing.Point(307, 124);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
             this.btSave.TabIndex = 8;
@@ -78,7 +80,7 @@
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.Image = global::SenderUsersOnFrontol.Properties.Resources.door_out;
-            this.btClose.Location = new System.Drawing.Point(345, 94);
+            this.btClose.Location = new System.Drawing.Point(345, 124);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
             this.btClose.TabIndex = 9;
@@ -133,12 +135,32 @@
             this.tbIP.Text = "...";
             this.tbIP.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(71, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Тип кассы";
+            // 
+            // cmbTerminalType
+            // 
+            this.cmbTerminalType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTerminalType.FormattingEnabled = true;
+            this.cmbTerminalType.Location = new System.Drawing.Point(138, 84);
+            this.cmbTerminalType.Name = "cmbTerminalType";
+            this.cmbTerminalType.Size = new System.Drawing.Size(239, 21);
+            this.cmbTerminalType.TabIndex = 21;
+            // 
             // frmAddTerminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 134);
+            this.ClientSize = new System.Drawing.Size(385, 160);
             this.ControlBox = false;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cmbTerminalType);
             this.Controls.Add(this.tbIP);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -172,5 +194,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbNumberTerminal;
         private IPAddressControlLib.IPAddressControl tbIP;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmbTerminalType;
     }
 }

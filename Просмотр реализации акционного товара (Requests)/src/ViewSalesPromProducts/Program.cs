@@ -23,10 +23,10 @@ namespace ViewSalesPromProducts
             if (args.Length != 0)
                 if (Project.FillSettings(args))
                 {
-                    //Logging.Init(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
-                    //Logging.StartFirstLevel(1);
-                    //Logging.Comment("Вход в программу");
-                    //Logging.StopFirstLevel();
+                    Logging.Init(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
+                    Logging.StartFirstLevel(1);
+                    Logging.Comment("Вход в программу");
+                    Logging.StopFirstLevel();
 
                     Config.connectMain = new sqlProcedures(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
                     Config.connectMainKassRealiz = new sqlProcedures(ConnectionSettings.GetServer("2"), ConnectionSettings.GetDatabase("2"), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
@@ -41,10 +41,10 @@ namespace ViewSalesPromProducts
                         if (Nwuram.Framework.Settings.User.UserSettings.User.StatusCode.ToUpper().Equals("ОП"))
                         Application.Run(new frmViewDiscountGoods());
 
-                    //Logging.StartFirstLevel(2);
-                    //Logging.Comment("Выход из программы");
-                    //Logging.StopFirstLevel();
-                    //Project.clearBufferFiles();
+                    Logging.StartFirstLevel(2);
+                    Logging.Comment("Выход из программы");
+                    Logging.StopFirstLevel();
+                    Project.clearBufferFiles();
                 }
         }
     }

@@ -194,5 +194,36 @@ namespace ViewSalesPromProducts
                  ap);
         }
 
+        #region "Настройки"
+        public DataTable getSettings(string id_value)
+        {
+            ap.Clear();
+            ap.Add(ConnectionSettings.GetIdProgram());
+            ap.Add(id_value);
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[getSettings]",
+                 new string[2] { "@id_prog", "@id_value" },
+                 new DbType[2] { DbType.Int32, DbType.String }, ap);
+
+            return dtResult;
+        }
+
+        public DataTable setSettings(string id_value, string value)
+        {
+            ap.Clear();
+            ap.Add(ConnectionSettings.GetIdProgram());
+            ap.Add(id_value);
+            ap.Add(value);
+
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[setSettings]",
+                 new string[3] { "@id_prog", "@id_value", "@value" },
+                 new DbType[3] { DbType.Int32, DbType.String, DbType.String }, ap);
+
+            return dtResult;
+        }
+
+        #endregion
+
     }
 }

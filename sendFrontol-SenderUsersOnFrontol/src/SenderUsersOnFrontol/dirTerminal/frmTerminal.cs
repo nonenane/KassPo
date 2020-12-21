@@ -54,7 +54,7 @@ namespace SenderUsersOnFrontol
                 {
                     int id = int.Parse(dtData.DefaultView[dgvData.CurrentRow.Index]["id"].ToString());
                     string cName = dtData.DefaultView[dgvData.CurrentRow.Index]["IP"].ToString();                    
-                    DataTable dtResult = Config.hCntMain.setTerminal(id, -1, "", "", 2);
+                    DataTable dtResult = Config.hCntMain.setTerminal(id, -1, "", "", 2,0);
                     if (dtResult != null && dtResult.Rows.Count != 0)
                         if (dtResult.Rows[0]["id"].ToString().Equals("-1"))
                         {MessageBox.Show("Не удалось удалить данные!", "Информирование", MessageBoxButtons.OK, MessageBoxIcon.Information);}

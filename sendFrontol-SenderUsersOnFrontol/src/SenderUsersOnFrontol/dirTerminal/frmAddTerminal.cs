@@ -24,12 +24,14 @@ namespace SenderUsersOnFrontol
             id = int.Parse(row["id"].ToString());
             tbNumberTerminal.Text = row["Number"].ToString();
             tbPath.Text = row["Path"].ToString();
-            tbIP.Text = row["IP"].ToString();            
+            tbIP.Text = row["IP"].ToString();
+            cmbTerminalType.SelectedValue = (int)row["id_TerminalType"];
             isEdit = false;
         }
         public frmAddTerminal()
         {
             InitializeComponent();
+            GetTerminalType();
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -55,7 +57,15 @@ namespace SenderUsersOnFrontol
                 return;
             }
 
-            DataTable dtResult = Config.hCntMain.setTerminal(id, int.Parse(tbNumberTerminal.Text), tbIP.Text, tbPath.Text, 1);
+            if (cmbTerminalType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выбрать тип кассы!", "Информирование", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int id_TerminalType = int.Parse(cmbTerminalType.SelectedValue.ToString());
+
+            DataTable dtResult = Config.hCntMain.setTerminal(id, int.Parse(tbNumberTerminal.Text), tbIP.Text, tbPath.Text, 1, id_TerminalType);
             if (dtResult == null || dtResult.Rows.Count == 0 || dtResult.Rows[0]["id"].ToString().Equals("-1"))
             {
                 MessageBox.Show("Не удалось сохранить данные", "Информирование", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -67,6 +77,8 @@ namespace SenderUsersOnFrontol
                 return;
             }
 
+
+
             if (id == -1)
             {
                 Logging.StartFirstLevel(720);
@@ -75,6 +87,8 @@ namespace SenderUsersOnFrontol
                 Logging.Comment("Номер кассы: " + tbNumberTerminal.Text);
                 Logging.Comment("Путь канала обмена: "+ tbPath.Text);
                 Logging.Comment("IP-адресс: "+ tbIP.Text);
+                Logging.Comment($"Тип кассы: ID:{cmbTerminalType.SelectedValue}; Наименование:{cmbTerminalType.Text}");
+
 
                 Logging.Comment("Операцию выполнил: ID:" + Nwuram.Framework.Settings.User.UserSettings.User.Id
                                 + " ; ФИО:" + Nwuram.Framework.Settings.User.UserSettings.User.FullUsername);
@@ -90,6 +104,10 @@ namespace SenderUsersOnFrontol
                 Logging.VariableChange("Номер кассы: ", tbNumberTerminal.Text, row["Number"].ToString(), typeLog._string);
                 Logging.VariableChange("Путь канала обмена: ", tbPath.Text, row["Path"].ToString());
                 Logging.VariableChange("IP-адресс: ", tbIP.Text , row["IP"].ToString());
+
+                Logging.VariableChange($"Тип кассы: ID", cmbTerminalType.SelectedValue, row["id_TerminalType"], typeLog._int);
+                Logging.VariableChange($"Тип кассы Наименование:", cmbTerminalType.Text, (string)row["NameTerminalType"], typeLog._string);
+
 
                 Logging.Comment("Операцию выполнил: ID:" + Nwuram.Framework.Settings.User.UserSettings.User.Id
                                 + " ; ФИО:" + Nwuram.Framework.Settings.User.UserSettings.User.FullUsername);
@@ -119,6 +137,15 @@ namespace SenderUsersOnFrontol
         private void tbNumberTerminal_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = (!Char.IsNumber(e.KeyChar) && (e.KeyChar != '\b'));
+        }
+
+        private void GetTerminalType()
+        {
+            DataTable dtTerminalType = Config.hCntMain.GetTerminalType(false);
+            cmbTerminalType.DataSource = dtTerminalType;
+            cmbTerminalType.ValueMember = "id";
+            cmbTerminalType.DisplayMember = "NameTerminalType";
+            cmbTerminalType.SelectedIndex = -1;
         }
     }
 }
