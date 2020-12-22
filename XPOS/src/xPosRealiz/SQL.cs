@@ -118,11 +118,73 @@ namespace xPosRealiz
         }
 
 
+        public static DataTable setSettings(string id_value, string value)
+        {
+            ap.Clear();
+            ap.Add(ConnectionSettings.GetIdProgram());
+            ap.Add(id_value);
+            ap.Add(value);
+
+            return sql.executeProcedure("[CheckVideoReg].[setSettings]",
+                 new string[3] { "@id_prog", "@id_value", "@value" },
+                 new DbType[3] { DbType.Int32, DbType.String, DbType.String }, ap);
+        }
+
         public static DataTable getCatalogPromotionalTovars()
         {
             ap.Clear();
 
             return sql.executeProcedure("[xpos].[getCatalogPromotionalTovars]",
+                new string[0] { },
+                new DbType[0] { }, ap);
+
+        }
+
+        public static DataTable GetTerminalType(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = sql.executeProcedure("[sendFrontol].[getTerminalType]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["NameTerminalType"] = "Все Типы";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, NameTerminalType asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+            else
+            {
+                dtResult.DefaultView.Sort = "NameTerminalType asc";
+                dtResult = dtResult.DefaultView.ToTable().Copy();
+            }
+
+            return dtResult;
+        }
+
+        public static DataTable GetSpravTerminal()
+        {
+            ap.Clear();
+
+            return sql.executeProcedure("[sendFrontol].[GetSpravTerminal]",
                 new string[0] { },
                 new DbType[0] { }, ap);
 

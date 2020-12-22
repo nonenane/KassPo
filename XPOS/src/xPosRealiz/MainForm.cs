@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Threading;
 using System.Configuration;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using xPosRealiz_sprav_shues;
 
 namespace xPosRealiz
 {
@@ -27,37 +29,46 @@ namespace xPosRealiz
         public static string[] sterms;
         public static bool use;
 
+        private DataTable dtSpravTerminal;
+        private Nwuram.Framework.UI.Service.EnableControlsServiceInProg blocker = new Nwuram.Framework.UI.Service.EnableControlsServiceInProg();
+        private Nwuram.Framework.UI.Forms.frmLoad fLoad;
+
         public MainForm()
         {
             InitializeComponent();
+            
+            //use = bool.Parse(ConfigurationManager.AppSettings["use"].ToString());
+            //sterms = ConfigurationManager.AppSettings["terminals"].Split(',');
+            //DataTable dt = SQL.getLastId();
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    if (use && sterms.Contains(dr["number"].ToString()))
+            //    //if (dr["number"].ToString() == "58" || dr["number"].ToString() == "56" || dr["number"].ToString() == "3")
+            //    {
+            //        path.Add(dr["path"].ToString());
+            //        terminals.Add(Convert.ToInt32(dr["number"].ToString()));
+            //        ids.Add(Convert.ToInt64(dr["lastID"].ToString()));
+            //        oldids.Add(Convert.ToInt64(dr["lastID"].ToString()));
+            //    }
+            //    else lastID = Convert.ToInt64(dr["lastID"].ToString());
+            //}
+
+            //timerRealiz_Tick(null, null);
+            //timerRealiz.Start();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             setTimeToTimer();
-
-
-
-
-            use = bool.Parse(ConfigurationManager.AppSettings["use"].ToString());
-            sterms = ConfigurationManager.AppSettings["terminals"].Split(',');
-            DataTable dt = SQL.getLastId();
-            foreach (DataRow dr in dt.Rows)
-            {
-                if (use && sterms.Contains(dr["number"].ToString()))
-                //if (dr["number"].ToString() == "58" || dr["number"].ToString() == "56" || dr["number"].ToString() == "3")
-                {
-                    path.Add(dr["path"].ToString());
-                    terminals.Add(Convert.ToInt32(dr["number"].ToString()));
-                    ids.Add(Convert.ToInt64(dr["lastID"].ToString()));
-                    oldids.Add(Convert.ToInt64(dr["lastID"].ToString()));
-                }
-                else lastID = Convert.ToInt64(dr["lastID"].ToString());
-            }
-
-            timerRealiz_Tick(null, null);
-            timerRealiz.Start();
+            GetTerminalType();
+            GetSpravTerminal();
+            //Task.Run(() => TimeTickUpdate());
+            TimeTickUpdate();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timerRealiz.Stop();
+            //timerRealiz.Stop();
         }
 
         private void timerRealiz_Tick(object sender, EventArgs e)
@@ -68,7 +79,7 @@ namespace xPosRealiz
             {
                 bwSparv.RunWorkerAsync();
                 spravYes = false;
-                timerRealiz.Stop();
+                //timerRealiz.Stop();
             }
         }
 
@@ -78,15 +89,7 @@ namespace xPosRealiz
         }
 
         #region Sprav
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            spravYes = false;
-            btnPause.Enabled = false;
-            btnResume.Enabled = true;
-            string spravPath = string.Empty;
-            Sprav.createSpravFull();
-        }
-
+      
         private void bwSparv_DoWork(object sender, DoWorkEventArgs e)
         {
             DoOnUIThread(delegate ()
@@ -214,14 +217,22 @@ namespace xPosRealiz
             }
             if (lastID < newID) lastID++;
             SQL.setLastId(0, lastID);
-            if (btnResume.Enabled == false) spravYes = true;
-            DoOnUIThread(delegate ()
-            {
-                setTimeToTimer();
-            });
+            //if (btnResume.Enabled == false) spravYes = true;
+            //DoOnUIThread(delegate ()
+            //{
+            //    setTimeToTimer();
+            //});
             //Thread.Sleep(30000);
         }
-        #endregion
+
+        private void bwSparv_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (fLoad != null)
+                fLoad.Dispose();            
+            blocker.RestoreControlEnabledState(this);
+            setTimeToTimer();
+            //timerRealiz.Start();
+        }
 
         private void writeLog(string message)
         {
@@ -238,121 +249,141 @@ namespace xPosRealiz
             }
         }
 
-        private void bwSparv_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            timerRealiz.Start();
-        }
-
-        private void btnPause_Click(object sender, EventArgs e)
-        {
-            spravYes = false;
-            btnPause.Enabled = false;
-            btnResume.Enabled = true;
-            timerRealiz.Stop();
-        }
-
-        private void btnResume_Click(object sender, EventArgs e)
-        {
-            spravYes = true;
-            btnPause.Enabled = true;
-            btnResume.Enabled = false;
-            //timerRealiz.Start();
-            timerRealiz_Tick(null, null);
-        }
-
-        #region "Полный справочник"
-
-        private void bwFullSprav_DoWork(object sender, DoWorkEventArgs e)
-        {
-            for (int i = 0; i < path.Count(); i++)
-            {
-                bool existsIN = false;
-                Thread tIN = new Thread(new ThreadStart(delegate ()
-                { existsIN = System.IO.Directory.Exists(path[i] + @"atol\AIn"); })
-                 );
-                tIN.Start();
-                bool completedIN = tIN.Join(3000); //half a sec of timeout
-                if (!completedIN) { existsIN = false; tIN.Abort(); }
-                tIN = null;
-                try
-                {
-                    if (!existsIN)
-                    {
-                        DoOnUIThread(delegate ()
-                        {
-                            rtbSprav.Text += terminals[i] + " : Нет входящей папки Ain;\n";
-                            writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Нет входящей папки Ain;\n");
-                        });
-                        continue;
-                    }
-                    if (File.Exists(path[i].ToString() + @"atol\AIn\sprav.txt"))
-                    {
-                        DoOnUIThread(delegate ()
-                        {
-                            rtbSprav.Text += terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n";
-                            writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n");
-                        });
-                        continue;
-                    }
-                    File.Copy(@"sprav\FULL", path[i].ToString() + @"atol\AIn\AIn", true);
-                    File.Copy(@"sprav\sprav.txt", path[i].ToString() + @"atol\AIn\sprav.txt");
-                }
-                catch { }
-                DoOnUIThread(delegate () { rtbSprav.Text += DateTime.Now.ToString() + " " + terminals[i] + " : Флаг отправлен; \n"; });
-
-            }
-            //Thread.Sleep(600000);
-        }
-
-        private void bwFullSprav_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            spravYes = true;
-            btnPause.Enabled = true;
-            btnResume.Enabled = false;
-        }
-
         #endregion
+               
+        //#region "Полный справочник"
 
+        //private void bwFullSprav_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    for (int i = 0; i < path.Count(); i++)
+        //    {
+        //        bool existsIN = false;
+        //        Thread tIN = new Thread(new ThreadStart(delegate ()
+        //        { existsIN = System.IO.Directory.Exists(path[i] + @"atol\AIn"); })
+        //         );
+        //        tIN.Start();
+        //        bool completedIN = tIN.Join(3000); //half a sec of timeout
+        //        if (!completedIN) { existsIN = false; tIN.Abort(); }
+        //        tIN = null;
+        //        try
+        //        {
+        //            if (!existsIN)
+        //            {
+        //                DoOnUIThread(delegate ()
+        //                {
+        //                    rtbSprav.Text += terminals[i] + " : Нет входящей папки Ain;\n";
+        //                    writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Нет входящей папки Ain;\n");
+        //                });
+        //                continue;
+        //            }
+        //            if (File.Exists(path[i].ToString() + @"atol\AIn\sprav.txt"))
+        //            {
+        //                DoOnUIThread(delegate ()
+        //                {
+        //                    rtbSprav.Text += terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n";
+        //                    writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n");
+        //                });
+        //                continue;
+        //            }
+        //            File.Copy(@"sprav\FULL", path[i].ToString() + @"atol\AIn\AIn", true);
+        //            File.Copy(@"sprav\sprav.txt", path[i].ToString() + @"atol\AIn\sprav.txt");
+        //        }
+        //        catch { }
+        //        DoOnUIThread(delegate () { rtbSprav.Text += DateTime.Now.ToString() + " " + terminals[i] + " : Флаг отправлен; \n"; });
+
+        //    }
+        //    //Thread.Sleep(600000);
+        //}
+
+        //private void bwFullSprav_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    spravYes = true;
+        //    btnPause.Enabled = true;
+        //    btnResume.Enabled = false;
+        //}
+
+        //#endregion
 
         #region "Таймер обновления"
-        private bool TimeStoper = false;
+        long timer = 60;
+        private bool TimeStoper = false, UpdateTime = false;
+        Task task1;
+        private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        
         private void setTimeToTimer()
         {
-            int defaultValue = 5000;
+            long defaultValue = 60;
             DataTable dtTmp = SQL.getSettings("grpt");
 
             if (dtTmp != null && dtTmp.Rows.Count > 0)
                 try
                 {
-                    defaultValue = int.Parse(dtTmp.Rows[0]["value"].ToString()) * 1000;
+                    defaultValue = long.Parse(dtTmp.Rows[0]["value"].ToString());
                 }
-                catch { defaultValue = 5000; }
+                catch { defaultValue = 60; }
 
-            timerRealiz.Interval = defaultValue;
+            timer = defaultValue;
+            tbDelay.Text = timer.ToString();
+            TimeStoper = false;
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
+          
+        private void TimeTickUpdate()
         {
-            Task.Run(() => TimeTickUpdate());
-        }
-
-        private async void TimeTickUpdate()
-        {
-            long timer = 30;
-            TimeSpan time = TimeSpan.FromSeconds(timer);
-            while (true)
+            CancellationToken token = cancelTokenSource.Token;
+            task1 = new Task(() =>
             {
-                if (!TimeStoper)
+                TimeSpan time = TimeSpan.FromSeconds(timer);
+                while (true)
                 {
-                    //AppendText($"{time.TotalHours}:{time.TotalMinutes % 60}:{time.TotalSeconds % 60}");
-                    AppendText(time.ToString());
-                    if (time.TotalSeconds == 0)
-                        time = TimeSpan.FromSeconds(timer);
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
 
-                    Thread.Sleep(1000);
-                    time = time.Add(-TimeSpan.FromMilliseconds(1000));
+                    if (UpdateTime)
+                    {
+                        time = TimeSpan.FromSeconds(timer);
+                        AppendText(time.ToString());
+                        UpdateTime = false;
+                    }
+
+                    if (!TimeStoper)
+                    {
+                        //AppendText($"{time.TotalHours}:{time.TotalMinutes % 60}:{time.TotalSeconds % 60}");
+                        AppendText(string.Format("{0:d2}:{1:d2}:{2:d2}", time.Hours, time.Minutes, time.Seconds));
+                        //AppendText(time.ToString());
+                        if (time.TotalSeconds == 0)
+                        {
+                            DoOnUIThread(delegate ()
+                            {
+
+                                if (!bwSparv.IsBusy)
+                                {
+                                    TimeStoper = true;
+                                    blocker.SaveControlsEnabledState(this);
+                                    blocker.SetControlsEnabled(this, false);
+                                    fLoad = new Nwuram.Framework.UI.Forms.frmLoad();
+                                    fLoad.TextWait = "Грузим данные.";
+                                    fLoad.TopMost = false;
+                                    fLoad.Owner = this;
+                                    fLoad.Show();
+                                    bwSparv.RunWorkerAsync();
+                                }
+                                else
+                                {
+                                    setTimeToTimer();
+                                }
+                            });
+                            time = TimeSpan.FromSeconds(timer);
+                        }
+
+                        Thread.Sleep(100);
+                        time = time.Add(-TimeSpan.FromMilliseconds(100));
+                    }                                       
                 }
-            }
+            });
+
+            task1.Start();
         }
         
         private delegate void AppendListHandler(string sLog);
@@ -362,7 +393,7 @@ namespace xPosRealiz
                 lTimeTickUpdate.Invoke(new AppendListHandler(AppendText),
                                     new object[] { sLog });
             else
-                lTimeTickUpdate.Text = ($"До обновления:{sLog}");
+                lTimeTickUpdate.Text = $"До обновления:\r\n{sLog}";
         }
       
         private void btStopTimer_Click(object sender, EventArgs e)
@@ -378,7 +409,226 @@ namespace xPosRealiz
             btStopTimer.Enabled = true;
             TimeStoper = false;
         }
+        
+        private void tbDelay_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if (tb.Modified)
+            {
+                tb.BackColor = Color.Yellow;
+            }
+        }
+
+        private void btSetDelay_Click(object sender, EventArgs e)
+        {
+            tbDelay.BackColor = Color.White;
+            
+            SQL.setSettings("grpt", tbDelay.Text);
+            timer = int.Parse(tbDelay.Text);
+
+            tbDelay.Modified = false;
+            UpdateTime = true;
+            //cancelTokenSource.Cancel();
+            //TimeTickUpdate();
+        }
+
+        private void GetTerminalType()
+        {
+            DataTable dtTerminalType = SQL.GetTerminalType(true);
+            cmbTerminalType.DataSource = dtTerminalType;
+            cmbTerminalType.ValueMember = "id";
+            cmbTerminalType.DisplayMember = "NameTerminalType";            
+        }
 
         #endregion
+
+        private void GetSpravTerminal()
+        {
+            dtSpravTerminal = SQL.GetSpravTerminal();
+            dgvGoods.AutoGenerateColumns = false;
+            dgvGoods.DataSource = dtSpravTerminal;
+        }
+
+        private void dgvGoods_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (cV.Index == e.ColumnIndex)
+            {
+                if (dtSpravTerminal != null)
+                {
+                    EnumerableRowCollection<DataRow> rowCollect = dtSpravTerminal.AsEnumerable().Where(r => r.Field<bool>("isSelect"));
+                    if (rowCollect.Count() > 0)
+                    {
+                        foreach (DataRow row in rowCollect)
+                        {
+                            row["isSelect"] = false;
+                        }
+                        dtSpravTerminal.AcceptChanges();
+                    }
+                    else
+                    {
+                        foreach (DataRow row in dtSpravTerminal.Rows)
+                        {
+                            row["isSelect"] = true;
+                        }
+                        dtSpravTerminal.AcceptChanges();
+                    }
+                }
+            }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+
+            Task task2 = new Task(() =>
+            {
+                DoOnUIThread(delegate ()
+                {
+                    blocker.SaveControlsEnabledState(this);
+                    blocker.SetControlsEnabled(this, false);
+                    fLoad = new Nwuram.Framework.UI.Forms.frmLoad();
+                    fLoad.TextWait = "Грузим данные.";
+                    fLoad.TopMost = false;
+                    fLoad.Owner = this;
+                    fLoad.Show();
+                    TimeStoper = true;
+                });
+
+                Sprav.createSpravFull();
+
+                DoOnUIThread(delegate ()
+                {
+                    if (fLoad != null)
+                        fLoad.Dispose();
+                    TimeStoper = false;
+                    blocker.RestoreControlEnabledState(this);
+                });
+            });
+            task2.Start();
+        }
+
+        private void cmbTerminalType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            FilterTerminal();
+        }
+
+        private void dgvGoods_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            Color rColor = Color.White;
+            try
+            {
+                if (dtSpravTerminal != null && dtSpravTerminal.Rows.Count > 0 && dtSpravTerminal.DefaultView.Count > 0)
+                {
+                    DataRowView row = dtSpravTerminal.DefaultView[e.RowIndex];
+                    if (row["id_gu"] != DBNull.Value && row["last_id_gu"] != DBNull.Value)
+                        if ((int)row["id_gu"] != (int)row["last_id_gu"]) rColor = panel2.BackColor;
+                }
+            }
+            catch { }
+
+            dgvGoods.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            dgvGoods.Rows[e.RowIndex].DefaultCellStyle.BackColor =
+                dgvGoods.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = rColor;
+
+
+        }
+
+        private void dgvGoods_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            //Рисуем рамку для выделеной строки
+            if (dgv.Rows[e.RowIndex].Selected)
+            {
+                int width = dgv.Width;
+                Rectangle r = dgv.GetRowDisplayRectangle(e.RowIndex, false);
+                Rectangle rect = new Rectangle(r.X, r.Y, width - 1, r.Height - 1);
+
+                ControlPaint.DrawBorder(e.Graphics, rect,
+                    SystemColors.Highlight, 2, ButtonBorderStyle.Solid,
+                    SystemColors.Highlight, 2, ButtonBorderStyle.Solid,
+                    SystemColors.Highlight, 2, ButtonBorderStyle.Solid,
+                    SystemColors.Highlight, 2, ButtonBorderStyle.Solid);
+            }
+        }
+
+        private void tbDelay_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && e.KeyChar != '\b';
+        }
+
+        private void tbDelay_Leave(object sender, EventArgs e)
+        {
+            if (!tbDelay.Enabled) return;
+
+            try
+            {
+                int tmp;
+                if (int.TryParse(tbDelay.Text, out tmp))
+                {
+                    if (10 <= tmp && tmp <= 600)
+                        tbDelay.Text = tmp.ToString();
+                    else
+                        tbDelay.Text = "10";
+                }
+                else
+                    tbDelay.Text = "10";
+            }
+            catch
+            {
+                tbDelay.Text = "10";
+            }
+        }
+
+        private void FilterTerminal()
+        {
+            try
+            {
+                string str = "";
+
+                if ((byte)cmbTerminalType.SelectedValue != 0)
+                    str += (str.Trim().Length == 0 ? "" : " and ") + $"id_TerminalType = {cmbTerminalType.SelectedValue}";
+
+                dtSpravTerminal.DefaultView.RowFilter = str;
+            }
+            catch
+            {
+                dtSpravTerminal.DefaultView.RowFilter = "id = -9999";
+            }
+        }
+
+        private void getSaveData()
+        {
+            string jsonString = File.ReadAllText(Config.PathFile + @"\settings.json");
+
+            Config.ProgSettngs = JsonConvert.DeserializeObject<Settings>(jsonString);            
+        }
+
+        private void dgvGoods_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void dgvGoods_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            setSaveData();
+        }
+
+        private void dgvGoods_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //setSaveData();
+        }
+
+        private void setSaveData()
+        {
+            if(Config.ProgSettngs==null) Config.ProgSettngs = new Settings();
+
+            var tl = dtSpravTerminal.DefaultView.ToTable().AsEnumerable().Where(r => r.Field<bool>("isSelect")).Select(s => new { id = s.Field<int>("id") });
+
+
+            Config.ProgSettngs.IdTerminal = new List<int>(new int[]{ 1,2,4,56,8,34});
+
+            File.WriteAllText(Config.PathFile + @"\settings.json", JsonConvert.SerializeObject(Config.ProgSettngs));
+        }
     }
+
 }
