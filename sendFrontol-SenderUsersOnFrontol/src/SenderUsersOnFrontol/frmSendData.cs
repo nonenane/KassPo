@@ -20,8 +20,8 @@ namespace SenderUsersOnFrontol
             DataTable dtTmp = dtData.Copy();
            // if (rbSelected.Checked)
            // {
-                //dtTmp.DefaultView.RowFilter = "isUsed = 1";
-                //dtTmp = dtTmp.DefaultView.ToTable();
+                dtTmp.DefaultView.RowFilter = "isUsed = 1";
+                dtTmp = dtTmp.DefaultView.ToTable();
             //}
             return dtTmp;
         }
@@ -72,7 +72,7 @@ namespace SenderUsersOnFrontol
             for (int i = 0; i < dtData.Rows.Count; i++)
             {
                 if (bool.Parse(dtData.DefaultView[i]["isUsed"].ToString()) == true)
-                    check = true;
+                { check = true; break; }
             }
 
             //if (!(check) && rbSelected.Checked)

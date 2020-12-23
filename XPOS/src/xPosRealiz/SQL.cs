@@ -19,7 +19,7 @@ namespace xPosRealiz
         public static DataTable getListDeps()
         {
             ap.Clear();
-            return sql.executeProcedure("[xpos].[getListDeps]",
+            return sql.executeProcedure("[sendFrontol].[getListDeps]",
                 new string[] { },
                 new DbType[] { }, ap);
         }
@@ -27,18 +27,17 @@ namespace xPosRealiz
         public static DataTable getListTovar()
         {
             ap.Clear();
-            return sql.executeProcedure("[xpos].[getListTovar]",//for 5.50 dbase1
+            return sql.executeProcedure("[sendFrontol].[getListTovar]",//for 5.50 dbase1
                 new string[] { },
                 new DbType[] { }, ap);
         }
-
        
         public static DataTable getLastListTovar(long last_id,bool all)
         {
             ap.Clear();
             ap.Add(last_id);
             ap.Add(all);
-            return sql.executeProcedure("[xpos].[getLastListTovar]",
+            return sql.executeProcedure("[sendFrontol].[getLastListTovar]",
                 new string[] { "@last_id", "@scope"},
                 new DbType[] { DbType.Int64, DbType.Boolean}, ap);
         }
@@ -46,7 +45,7 @@ namespace xPosRealiz
         public static DataTable getListGrp()
         {
             ap.Clear();
-            return sql.executeProcedure("[xpos].[getListGrp]",
+            return sql.executeProcedure("[sendFrontol].[getListGrp]",
                 new string[] { },
                 new DbType[] { }, ap);
         }
@@ -54,7 +53,7 @@ namespace xPosRealiz
         public static long getLastIdSprav()
         {
             ap.Clear();
-            DataTable dt = sql.executeProcedure("[xpos].[getLastIdSprav]",
+            DataTable dt = sql.executeProcedure("[sendFrontol].[getLastIdSprav]",
                 new string[] { },
                 new DbType[] { }, ap);
             try
@@ -67,7 +66,7 @@ namespace xPosRealiz
         public static DataTable getLastId()
         {
             ap.Clear();
-            return sql.executeProcedure("[xpos].[getLastID]",
+            return sql.executeProcedure("[sendFrontol].[getLastID]",
                 new string[] { },
                 new DbType[] { }, ap);
         }
@@ -77,7 +76,7 @@ namespace xPosRealiz
             ap.Clear();
             ap.Add(num);
             ap.Add(id);
-            return sql.executeProcedure("[xpos].[setLastID]",
+            return sql.executeProcedure("[sendFrontol].[setLastID]",
                 new string[] { "@number","@lastID" },
                 new DbType[] { DbType.Int32, DbType.Int64 }, ap);
         }
@@ -87,7 +86,7 @@ namespace xPosRealiz
             ap.Clear();
             ap.Add(terminal);
             ap.Add(id);
-            return sql.executeProcedure("[xpos].[setJSprav]",
+            return sql.executeProcedure("[sendFrontol].[setJSprav]",
                 new string[] { "@terminal", "@id" },
                 new DbType[] { DbType.Int32, DbType.Int64 }, ap);
         }
@@ -96,7 +95,7 @@ namespace xPosRealiz
         {
             ap.Clear();
             ap.Add(terminal);
-            DataTable dt = sql.executeProcedure("[xpos].[getJSprav]",
+            DataTable dt = sql.executeProcedure("[sendFrontol].[getJSprav]",
                 new string[] { "@terminal"},
                 new DbType[] { DbType.Int32}, ap);
             try { return dt.Rows[0][0].ToString(); }
@@ -105,18 +104,16 @@ namespace xPosRealiz
 
         #endregion
 
-
         public static DataTable getSettings(string id_value)
         {
             ap.Clear();
             ap.Add(ConnectionSettings.GetIdProgram());
             ap.Add(id_value);
-            return sql.executeProcedure("[xpos].[getSettings]",
+            return sql.executeProcedure("[sendFrontol].[getSettings]",
                 new string[2] { "@id_prog", "@id_value" },
                 new DbType[2] { DbType.Int32,DbType.String }, ap);
             
         }
-
 
         public static DataTable setSettings(string id_value, string value)
         {
@@ -125,7 +122,7 @@ namespace xPosRealiz
             ap.Add(id_value);
             ap.Add(value);
 
-            return sql.executeProcedure("[CheckVideoReg].[setSettings]",
+            return sql.executeProcedure("[sendFrontol].[setSettings]",
                  new string[3] { "@id_prog", "@id_value", "@value" },
                  new DbType[3] { DbType.Int32, DbType.String, DbType.String }, ap);
         }

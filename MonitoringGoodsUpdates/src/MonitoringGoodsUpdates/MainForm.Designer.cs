@@ -32,29 +32,20 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.cbOnline = new System.Windows.Forms.CheckBox();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.dgvMonitoring = new System.Windows.Forms.DataGridView();
-            this.id_goods_updates = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dep_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ean = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.old_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.not_sent_terminals = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time_send = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlSending = new System.Windows.Forms.Panel();
@@ -64,14 +55,24 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvTerminals = new System.Windows.Forms.DataGridView();
-            this.timer = new System.Windows.Forms.Timer(this.components);
-            this.timer_message = new System.Windows.Forms.Timer(this.components);
-            this.btnPrint = new System.Windows.Forms.Button();
             this.terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTypeTerminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.time_update = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_status_terminal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.timer_message = new System.Windows.Forms.Timer(this.components);
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.id_goods_updates = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dep_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ean = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.old_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.not_sent_terminals = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time_send = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_departments = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonitoring)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTerminals)).BeginInit();
             this.SuspendLayout();
@@ -132,7 +133,8 @@
             this.price,
             this.not_sent_terminals,
             this.time_send,
-            this.id_status});
+            this.id_status,
+            this.id_departments});
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -154,88 +156,6 @@
             this.dgvMonitoring.CurrentCellChanged += new System.EventHandler(this.dgvMonitoring_CurrentCellChanged);
             this.dgvMonitoring.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvPrices_RowPostPaint);
             this.dgvMonitoring.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvPrices_RowPrePaint);
-            // 
-            // id_goods_updates
-            // 
-            this.id_goods_updates.DataPropertyName = "id_goods_updates";
-            this.id_goods_updates.HeaderText = "id_goods_updates";
-            this.id_goods_updates.Name = "id_goods_updates";
-            this.id_goods_updates.ReadOnly = true;
-            this.id_goods_updates.Visible = false;
-            // 
-            // dep_name
-            // 
-            this.dep_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dep_name.DataPropertyName = "dep_name";
-            this.dep_name.HeaderText = "Отдел";
-            this.dep_name.Name = "dep_name";
-            this.dep_name.ReadOnly = true;
-            this.dep_name.Width = 85;
-            // 
-            // ean
-            // 
-            this.ean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ean.DataPropertyName = "ean";
-            this.ean.HeaderText = "EAN";
-            this.ean.Name = "ean";
-            this.ean.ReadOnly = true;
-            this.ean.Width = 90;
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "Название";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
-            // old_price
-            // 
-            this.old_price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.old_price.DataPropertyName = "old_price";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.old_price.DefaultCellStyle = dataGridViewCellStyle2;
-            this.old_price.HeaderText = "Старая цена";
-            this.old_price.Name = "old_price";
-            this.old_price.ReadOnly = true;
-            this.old_price.Width = 60;
-            // 
-            // price
-            // 
-            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.price.DataPropertyName = "price";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.price.DefaultCellStyle = dataGridViewCellStyle3;
-            this.price.HeaderText = "Новая цена";
-            this.price.Name = "price";
-            this.price.ReadOnly = true;
-            this.price.Width = 60;
-            // 
-            // not_sent_terminals
-            // 
-            this.not_sent_terminals.DataPropertyName = "not_sent_terminals";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.not_sent_terminals.DefaultCellStyle = dataGridViewCellStyle4;
-            this.not_sent_terminals.HeaderText = "Кассы, до которых не дошли цены";
-            this.not_sent_terminals.Name = "not_sent_terminals";
-            this.not_sent_terminals.ReadOnly = true;
-            // 
-            // time_send
-            // 
-            this.time_send.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.time_send.DataPropertyName = "time_send";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.time_send.DefaultCellStyle = dataGridViewCellStyle5;
-            this.time_send.HeaderText = "Время отправки на кассы";
-            this.time_send.Name = "time_send";
-            this.time_send.ReadOnly = true;
-            // 
-            // id_status
-            // 
-            this.id_status.DataPropertyName = "id_status";
-            this.id_status.HeaderText = "id_status";
-            this.id_status.Name = "id_status";
-            this.id_status.ReadOnly = true;
-            this.id_status.Visible = false;
             // 
             // dtpDate
             // 
@@ -352,26 +272,6 @@
             this.dgvTerminals.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvTerminals_RowPostPaint);
             this.dgvTerminals.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTerminals_RowPrePaint);
             // 
-            // timer
-            // 
-            this.timer.Interval = 600000;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
-            // 
-            // timer_message
-            // 
-            this.timer_message.Interval = 600000;
-            this.timer_message.Tick += new System.EventHandler(this.timer_message_Tick);
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.Location = new System.Drawing.Point(654, 595);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(108, 23);
-            this.btnPrint.TabIndex = 53;
-            this.btnPrint.Text = "В Excel";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
             // terminal
             // 
             this.terminal.DataPropertyName = "terminal";
@@ -412,6 +312,116 @@
             this.id_status_terminal.Name = "id_status_terminal";
             this.id_status_terminal.ReadOnly = true;
             this.id_status_terminal.Visible = false;
+            // 
+            // timer
+            // 
+            this.timer.Interval = 600000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // timer_message
+            // 
+            this.timer_message.Interval = 600000;
+            this.timer_message.Tick += new System.EventHandler(this.timer_message_Tick);
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(654, 595);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(108, 23);
+            this.btnPrint.TabIndex = 53;
+            this.btnPrint.Text = "В Excel";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // id_goods_updates
+            // 
+            this.id_goods_updates.DataPropertyName = "id_goods_updates";
+            this.id_goods_updates.HeaderText = "id_goods_updates";
+            this.id_goods_updates.Name = "id_goods_updates";
+            this.id_goods_updates.ReadOnly = true;
+            this.id_goods_updates.Visible = false;
+            // 
+            // dep_name
+            // 
+            this.dep_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dep_name.DataPropertyName = "dep_name";
+            this.dep_name.HeaderText = "Отдел";
+            this.dep_name.Name = "dep_name";
+            this.dep_name.ReadOnly = true;
+            this.dep_name.Width = 85;
+            // 
+            // ean
+            // 
+            this.ean.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ean.DataPropertyName = "ean";
+            this.ean.HeaderText = "EAN";
+            this.ean.Name = "ean";
+            this.ean.ReadOnly = true;
+            this.ean.Width = 90;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "Название";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            // 
+            // old_price
+            // 
+            this.old_price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.old_price.DataPropertyName = "old_price";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.old_price.DefaultCellStyle = dataGridViewCellStyle2;
+            this.old_price.HeaderText = "Старая цена";
+            this.old_price.Name = "old_price";
+            this.old_price.ReadOnly = true;
+            this.old_price.Width = 60;
+            // 
+            // price
+            // 
+            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.price.DataPropertyName = "price";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.price.DefaultCellStyle = dataGridViewCellStyle3;
+            this.price.HeaderText = "Новая цена";
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
+            this.price.Width = 60;
+            // 
+            // not_sent_terminals
+            // 
+            this.not_sent_terminals.DataPropertyName = "not_sent_terminals";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.not_sent_terminals.DefaultCellStyle = dataGridViewCellStyle4;
+            this.not_sent_terminals.HeaderText = "Кассы, до которых не дошли цены";
+            this.not_sent_terminals.Name = "not_sent_terminals";
+            this.not_sent_terminals.ReadOnly = true;
+            // 
+            // time_send
+            // 
+            this.time_send.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.time_send.DataPropertyName = "time_send";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.time_send.DefaultCellStyle = dataGridViewCellStyle5;
+            this.time_send.HeaderText = "Время отправки на кассы";
+            this.time_send.Name = "time_send";
+            this.time_send.ReadOnly = true;
+            // 
+            // id_status
+            // 
+            this.id_status.DataPropertyName = "id_status";
+            this.id_status.HeaderText = "id_status";
+            this.id_status.Name = "id_status";
+            this.id_status.ReadOnly = true;
+            this.id_status.Visible = false;
+            // 
+            // id_departments
+            // 
+            this.id_departments.DataPropertyName = "id_departments";
+            this.id_departments.HeaderText = "id_departments";
+            this.id_departments.Name = "id_departments";
+            this.id_departments.ReadOnly = true;
+            this.id_departments.Visible = false;
             // 
             // MainForm
             // 
@@ -463,6 +473,12 @@
         private System.Windows.Forms.DataGridView dgvTerminals;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Timer timer_message;
+        private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn terminal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeTerminal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time_update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn comment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_status_terminal;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_goods_updates;
         private System.Windows.Forms.DataGridViewTextBoxColumn dep_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn ean;
@@ -472,12 +488,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn not_sent_terminals;
         private System.Windows.Forms.DataGridViewTextBoxColumn time_send;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_status;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.DataGridViewTextBoxColumn terminal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeTerminal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn time_update;
-        private System.Windows.Forms.DataGridViewTextBoxColumn comment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_status_terminal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_departments;
     }
 }
 

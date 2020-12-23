@@ -66,7 +66,7 @@ namespace SenderUsersOnFrontol
                 Config.SendUserToTerminal();
                 get_data();
 
-                if (!createFile())
+                if (!createFile(chbDelOldUser.Checked))
                 {
                     MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
                 }
@@ -87,7 +87,7 @@ namespace SenderUsersOnFrontol
                 {
                     Config.SendUserToTerminal();
                     get_data();
-                    if (!createFile())
+                    if (!createFile(chbDelOldUser.Checked))
                     {
                         MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -179,7 +179,7 @@ namespace SenderUsersOnFrontol
                     //newData = true;
                     Config.SendUserToTerminal();
                     get_data();
-                    if (!createFile())
+                    if (!createFile(chbDelOldUser.Checked))
                     {
                         MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -200,7 +200,7 @@ namespace SenderUsersOnFrontol
             frmSendData frm = new frmSendData();
             if (DialogResult.OK == frm.ShowDialog())
             {
-                if (!createFile())
+                if (!createFile(chbDelOldUser.Checked))
                 {
                     MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -333,7 +333,7 @@ namespace SenderUsersOnFrontol
            
         }
 
-        private bool createFile()
+        private bool createFile(bool isDelUser,bool isDateDel = false)
         {
             DataTable dtData = Config.hCntMain.getUserToSend();
             int count_to_delete = 0;
@@ -360,31 +360,31 @@ namespace SenderUsersOnFrontol
                 file.WriteLine("##@@&&");
                 file.WriteLine("#");
 
-                if (chbDelOldUser.Checked)
+                if (isDelUser)
                     file.WriteLine("$$$DELETEALLUSERS");
 
                 //if (chbDelUsers.Checked)
                 //    file.WriteLine("$$$DELETEALLUSERS");
-                //else
-                //{
-                //    //ТУТ добавление пользователей которых надо удалить
-                //    DateTime? dateLastSend = Config.hCntMain.getLastDateAdd();
-                //    DataRow[] rowToDel = null;
-                //    if (dateLastSend == null)
-                //        rowToDel = dtData.Select("isActive = 0");
-                //    else
-                //        rowToDel = dtData.Select(String.Format("isActive = 0 and DateEdit > '{0}' ", dateLastSend));
+                else if(isDateDel)
+                {
+                    //ТУТ добавление пользователей которых надо удалить
+                    DateTime? dateLastSend = Config.hCntMain.getLastDateAdd();
+                    DataRow[] rowToDel = null;
+                    if (dateLastSend == null)
+                        rowToDel = dtData.Select("isActive = 0");
+                    else
+                        rowToDel = dtData.Select(String.Format("isActive = 0 and DateEdit > '{0}' ", dateLastSend));
 
-                //    if (rowToDel.Count() > 0)
-                //    {
-                //        count_to_delete = rowToDel.Count();
-                //        file.WriteLine("$$$DELETEUSERSBYCODE");
-                //        foreach (DataRow rDel in rowToDel)
-                //        {
-                //            file.WriteLine(rDel["id"].ToString());
-                //        }
-                //    }
-                //}
+                    if (rowToDel.Count() > 0)
+                    {
+                        count_to_delete = rowToDel.Count();
+                        file.WriteLine("$$$DELETEUSERSBYCODE");
+                        foreach (DataRow rDel in rowToDel)
+                        {
+                            file.WriteLine(rDel["id"].ToString());
+                        }
+                    }
+                }
 
                 file.WriteLine("$$$ADDUSERS");
 
@@ -466,6 +466,7 @@ namespace SenderUsersOnFrontol
                 {
                     Logging.Comment("Касса №" + row["Number"].ToString() + " Статус передачи: Ok");
                     row["statusSend"] = "Ok";
+                    Config.hCntMain.SetTerminalUserUpdate((int)row["id"]);
                 }
                 else
                     if (status == -100)
@@ -505,6 +506,7 @@ namespace SenderUsersOnFrontol
             frmOutLoad.Dispose();
             dgvStatus.DataSource = dtSendData;
             getDateSend();
+            GetDataTerminal();
         }
 
         private void tbFIO_TextChanged(object sender, EventArgs e)
@@ -571,7 +573,7 @@ namespace SenderUsersOnFrontol
 
         private void tbLoadToFile_Click(object sender, EventArgs e)
         {
-            if (!createFile())
+            if (!createFile(chbDelOldUser.Checked))
             {
                 MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -609,7 +611,7 @@ namespace SenderUsersOnFrontol
                 if (DialogResult.OK == frm.ShowDialog())
                 {
                     get_data();
-                    if (!createFile())
+                    if (!createFile(chbDelOldUser.Checked))
                     {
                         MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -895,7 +897,9 @@ namespace SenderUsersOnFrontol
             frmSendData frm = new frmSendData();
             if (DialogResult.OK == frm.ShowDialog())
             {
-                if (!createFile())
+                bool isDelUser = frm.GetDelUsers();
+
+                if (!createFile(isDelUser, true))
                 {
                     MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -915,7 +919,7 @@ namespace SenderUsersOnFrontol
                 Logging.StartFirstLevel(1139);
                 Logging.Comment("Состояние передачи");
 
-                Logging.Comment("Удалить старых пользователей :" + (chbDelUsers.Checked ? "Да" : "Нет"));
+                Logging.Comment("Удалить старых пользователей :" + (isDelUser ? "Да" : "Нет"));
 
                 // if (frm.setIsSelectedTerminal())
                 //{

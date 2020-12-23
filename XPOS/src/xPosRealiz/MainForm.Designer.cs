@@ -54,6 +54,7 @@
             this.cV = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.btSetting = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoods)).BeginInit();
@@ -240,9 +241,7 @@
             this.dgvGoods.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGoods.Size = new System.Drawing.Size(617, 544);
             this.dgvGoods.TabIndex = 0;
-            this.dgvGoods.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoods_CellContentClick);
-            this.dgvGoods.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoods_CellEndEdit);
-            this.dgvGoods.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoods_CellValueChanged);
+            this.dgvGoods.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoods_CellContentClick_1);
             this.dgvGoods.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvGoods_ColumnHeaderMouseDoubleClick);
             this.dgvGoods.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvGoods_RowPostPaint);
             this.dgvGoods.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvGoods_RowPrePaint);
@@ -310,11 +309,22 @@
             this.label3.TabIndex = 27;
             this.label3.Text = "Не отправлено";
             // 
+            // btSetting
+            // 
+            this.btSetting.Image = global::xPosRealiz_sprav_shues.Properties.Resources.p3;
+            this.btSetting.Location = new System.Drawing.Point(56, 148);
+            this.btSetting.Name = "btSetting";
+            this.btSetting.Size = new System.Drawing.Size(32, 32);
+            this.btSetting.TabIndex = 1;
+            this.btSetting.UseVisualStyleBackColor = true;
+            this.btSetting.Click += new System.EventHandler(this.btSetting_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(788, 635);
+            this.Controls.Add(this.btSetting);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.groupBox1);
@@ -372,6 +382,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cDateGoodSend;
         private System.Windows.Forms.DataGridViewTextBoxColumn cLastIdInBase;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cV;
+        private System.Windows.Forms.Button btSetting;
     }
 }
 

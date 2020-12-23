@@ -262,5 +262,16 @@ namespace SenderUsersOnFrontol
             return dtResult;
         }
 
+        public DataTable SetTerminalUserUpdate(int id_Terminal)
+        {
+            ap.Clear();
+            ap.Add(id_Terminal);
+            ap.Add(Nwuram.Framework.Settings.User.UserSettings.User.Id);
+
+            return executeProcedure("[sendFrontol].[SetTerminalUserUpdate]",
+                 new string[2] { "@id_Ternimal", "@id_user" },
+                 new DbType[2] { DbType.Int32, DbType.Int32 }, ap);
+        }
+
     }   
 }

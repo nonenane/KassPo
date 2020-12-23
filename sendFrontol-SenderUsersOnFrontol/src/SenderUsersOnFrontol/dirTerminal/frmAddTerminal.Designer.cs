@@ -68,7 +68,7 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSave.Image = global::SenderUsersOnFrontol.Properties.Resources.save_edit;
-            this.btSave.Location = new System.Drawing.Point(307, 124);
+            this.btSave.Location = new System.Drawing.Point(316, 121);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
             this.btSave.TabIndex = 8;
@@ -80,7 +80,7 @@
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.Image = global::SenderUsersOnFrontol.Properties.Resources.door_out;
-            this.btClose.Location = new System.Drawing.Point(345, 124);
+            this.btClose.Location = new System.Drawing.Point(354, 121);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
             this.btClose.TabIndex = 9;
@@ -157,7 +157,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 160);
+            this.ClientSize = new System.Drawing.Size(398, 165);
             this.ControlBox = false;
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmbTerminalType);

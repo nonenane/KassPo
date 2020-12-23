@@ -32,26 +32,28 @@ namespace xPosRealiz
         private DataTable dtSpravTerminal;
         private Nwuram.Framework.UI.Service.EnableControlsServiceInProg blocker = new Nwuram.Framework.UI.Service.EnableControlsServiceInProg();
         private Nwuram.Framework.UI.Forms.frmLoad fLoad;
+        private bool isStartApplication = false;
 
         public MainForm()
         {
+            isStartApplication = true;
             InitializeComponent();
             
-            //use = bool.Parse(ConfigurationManager.AppSettings["use"].ToString());
-            //sterms = ConfigurationManager.AppSettings["terminals"].Split(',');
-            //DataTable dt = SQL.getLastId();
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    if (use && sterms.Contains(dr["number"].ToString()))
-            //    //if (dr["number"].ToString() == "58" || dr["number"].ToString() == "56" || dr["number"].ToString() == "3")
-            //    {
-            //        path.Add(dr["path"].ToString());
-            //        terminals.Add(Convert.ToInt32(dr["number"].ToString()));
-            //        ids.Add(Convert.ToInt64(dr["lastID"].ToString()));
-            //        oldids.Add(Convert.ToInt64(dr["lastID"].ToString()));
-            //    }
-            //    else lastID = Convert.ToInt64(dr["lastID"].ToString());
-            //}
+            use = bool.Parse(ConfigurationManager.AppSettings["use"].ToString());
+            sterms = ConfigurationManager.AppSettings["terminals"].Split(',');
+            DataTable dt = SQL.getLastId();
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (use && sterms.Contains(dr["number"].ToString()))
+                //if (dr["number"].ToString() == "58" || dr["number"].ToString() == "56" || dr["number"].ToString() == "3")
+                {
+                    path.Add(dr["path"].ToString());
+                    terminals.Add(Convert.ToInt32(dr["number"].ToString()));
+                    ids.Add(Convert.ToInt64(dr["lastID"].ToString()));
+                    oldids.Add(Convert.ToInt64(dr["lastID"].ToString()));
+                }
+                else lastID = Convert.ToInt64(dr["lastID"].ToString());
+            }
 
             //timerRealiz_Tick(null, null);
             //timerRealiz.Start();
@@ -59,11 +61,13 @@ namespace xPosRealiz
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             setTimeToTimer();
             GetTerminalType();
             GetSpravTerminal();
             //Task.Run(() => TimeTickUpdate());
             TimeTickUpdate();
+            isStartApplication = false;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -442,10 +446,12 @@ namespace xPosRealiz
 
         #endregion
 
+        #region ""
         private void GetSpravTerminal()
         {
             dtSpravTerminal = SQL.GetSpravTerminal();
             dgvGoods.AutoGenerateColumns = false;
+            getSaveData();
             dgvGoods.DataSource = dtSpravTerminal;
         }
 
@@ -598,37 +604,56 @@ namespace xPosRealiz
 
         private void getSaveData()
         {
-            string jsonString = File.ReadAllText(Config.PathFile + @"\settings.json");
+            try
+            {
+                if (!File.Exists(Config.PathFile + @"\settings.json")) return;
 
-            Config.ProgSettngs = JsonConvert.DeserializeObject<Settings>(jsonString);            
+                string jsonString = File.ReadAllText(Config.PathFile + @"\settings.json");
+                Config.ProgSettngs = JsonConvert.DeserializeObject<Settings>(jsonString);
+
+                if (dtSpravTerminal != null && dtSpravTerminal.Rows.Count > 0)
+                {
+                    EnumerableRowCollection<DataRow> rowCollect = dtSpravTerminal.AsEnumerable().Where(r => Config.ProgSettngs.IdTerminal.Contains(r.Field<int>("id")));
+
+                    foreach (DataRow row in rowCollect)
+                        row["isSelect"] = true;
+
+                    dtSpravTerminal.AcceptChanges();
+                }
+            }
+            catch
+            { }
         }
-
-        private void dgvGoods_CellContentClick(object sender, DataGridViewCellEventArgs e)
+       
+        private void dgvGoods_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            
-        }
-
-        private void dgvGoods_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
+            this.dgvGoods.CommitEdit(DataGridViewDataErrorContexts.Commit);
             setSaveData();
         }
 
-        private void dgvGoods_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void btSetting_Click(object sender, EventArgs e)
         {
-            //setSaveData();
+            new frmSetting().ShowDialog();
         }
 
         private void setSaveData()
         {
             if(Config.ProgSettngs==null) Config.ProgSettngs = new Settings();
 
-            var tl = dtSpravTerminal.DefaultView.ToTable().AsEnumerable().Where(r => r.Field<bool>("isSelect")).Select(s => new { id = s.Field<int>("id") });
+            var tl = dtSpravTerminal.DefaultView.ToTable().AsEnumerable().Where(r => r.Field<bool>("isSelect")).Select(s => new { id = s.Field<int>("id") }).ToList();
 
+            List<int> l = new List<int>();
+            foreach (var id in tl)
+            {
+                l.Add(id.id);
+            }
 
-            Config.ProgSettngs.IdTerminal = new List<int>(new int[]{ 1,2,4,56,8,34});
+            Config.ProgSettngs.IdTerminal = l;
 
             File.WriteAllText(Config.PathFile + @"\settings.json", JsonConvert.SerializeObject(Config.ProgSettngs));
         }
+
+        #endregion
     }
 
 }

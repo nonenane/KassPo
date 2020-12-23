@@ -21,11 +21,13 @@ namespace MonitoringGoodsUpdates
             return sql.executeProcedure("dbo.GetGoodsUpdates", new string[] { "@date" }, new DbType[] { DbType.DateTime }, parameters);
         }
 
-        public static DataTable GetGoodsUpdatesTerminals(int id_goods_updates, DateTime time_send)
+        public static DataTable GetGoodsUpdatesTerminals(int id_goods_updates, DateTime time_send,int id_deps)
         {
             parameters.Clear();
-            parameters.AddRange(new object[] { id_goods_updates, time_send });
-            return sql.executeProcedure("dbo.GetGoodsUpdatesTerminals", new string[] { "@id_goods_updates", "@time_send" }, new DbType[] { DbType.Int32, DbType.DateTime }, parameters);
+            parameters.AddRange(new object[] { id_goods_updates, time_send, id_deps });
+            return sql.executeProcedure("dbo.GetGoodsUpdatesTerminals",
+                new string[] { "@id_goods_updates", "@time_send", "@id_deps" },
+                new DbType[] { DbType.Int32, DbType.DateTime, DbType.Int32 }, parameters);
         }
 
         public static int GetUpdateIntervalSettings()

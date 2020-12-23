@@ -155,7 +155,8 @@ namespace MonitoringGoodsUpdates
             else
             {
                 dgvTerminals.AutoGenerateColumns = false;
-                dgvTerminals.DataSource = Procedures.GetGoodsUpdatesTerminals(Convert.ToInt32(dgvMonitoring.CurrentRow.Cells["id_goods_updates"].Value), Convert.ToDateTime(dgvMonitoring.CurrentRow.Cells["time_send"].Value));
+                int id_departments = (int)dgvMonitoring.CurrentRow.Cells["id_departments"].Value;
+                dgvTerminals.DataSource = Procedures.GetGoodsUpdatesTerminals(Convert.ToInt32(dgvMonitoring.CurrentRow.Cells["id_goods_updates"].Value), Convert.ToDateTime(dgvMonitoring.CurrentRow.Cells["time_send"].Value), id_departments);
             }
         }
 
