@@ -22,7 +22,6 @@ namespace xPosRealiz
         private static List<int> terminals = new List<int>();
         private static List<long> ids = new List<long>();
         private static List<long> oldids = new List<long>();
-        private Boolean flag;
         public static bool можно = true;
         public static bool spravYes = true;
         public static long lastID = 0;
@@ -32,20 +31,19 @@ namespace xPosRealiz
         private DataTable dtSpravTerminal;
         private Nwuram.Framework.UI.Service.EnableControlsServiceInProg blocker = new Nwuram.Framework.UI.Service.EnableControlsServiceInProg();
         private Nwuram.Framework.UI.Forms.frmLoad fLoad;
-        private bool isStartApplication = false;
 
         public MainForm()
         {
-            isStartApplication = true;
+            //isStartApplication = true;
             InitializeComponent();
             
+
             use = bool.Parse(ConfigurationManager.AppSettings["use"].ToString());
             sterms = ConfigurationManager.AppSettings["terminals"].Split(',');
             DataTable dt = SQL.getLastId();
             foreach (DataRow dr in dt.Rows)
             {
                 if (use && sterms.Contains(dr["number"].ToString()))
-                //if (dr["number"].ToString() == "58" || dr["number"].ToString() == "56" || dr["number"].ToString() == "3")
                 {
                     path.Add(dr["path"].ToString());
                     terminals.Add(Convert.ToInt32(dr["number"].ToString()));
@@ -54,37 +52,19 @@ namespace xPosRealiz
                 }
                 else lastID = Convert.ToInt64(dr["lastID"].ToString());
             }
-
-            //timerRealiz_Tick(null, null);
-            //timerRealiz.Start();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
-        {
-            
+        {            
             setTimeToTimer();
             GetTerminalType();
             GetSpravTerminal();
-            //Task.Run(() => TimeTickUpdate());
             TimeTickUpdate();
-            isStartApplication = false;
+            //isStartApplication = false;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //timerRealiz.Stop();
-        }
-
-        private void timerRealiz_Tick(object sender, EventArgs e)
-        {
-            //lblSpravTimer.Text = "Проверка начнется через " + (60 - DateTime.Now.TimeOfDay.Seconds) + " сек";
-            // sprav
-            if (spravYes && !bwSparv.IsBusy && (DateTime.Now.Hour >= 6 || DateTime.Now.Hour < 2))
-            {
-                bwSparv.RunWorkerAsync();
-                spravYes = false;
-                //timerRealiz.Stop();
-            }
         }
 
         private void DoOnUIThread(MethodInvoker d)
@@ -93,14 +73,16 @@ namespace xPosRealiz
         }
 
         #region Sprav
-      
+
         private void bwSparv_DoWork(object sender, DoWorkEventArgs e)
         {
             DoOnUIThread(delegate ()
             { rtbSprav.Text = ""; });
             string spravPath = string.Empty;
-            File.Delete(@"sprav\AinT");
-            File.Delete(@"sprav\Ain");
+            if (File.Exists(@"sprav\AinT"))
+                File.Delete(@"sprav\AinT");
+            if (File.Exists(@"sprav\Ain"))
+                File.Delete(@"sprav\Ain");
             long newID = SQL.getLastIdSprav();
             if (lastID < newID)
             {
@@ -109,17 +91,172 @@ namespace xPosRealiz
                     rtbSprav.Text += DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + ": Создание изменений справочника;\n";
                     rtbSprav.SelectionStart = rtbSprav.Text.Length;
                 });
-                //Thread.Sleep(3000);
-               // Sprav.createSprav(lastID + 1, false);
-
-
-               // File.Copy(@"sprav\AInT", @"sprav\" + (lastID + 1).ToString(), true);
-                //DoOnUIThread(delegate ()
-                //{
-                //    rtbSprav.Text += DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + ": Справочник создан;\n";
-                //    rtbSprav.SelectionStart = rtbSprav.Text.Length;
-                //});
             }
+
+            EnumerableRowCollection<DataRow> rowCollect = dtSpravTerminal.AsEnumerable().Where(r => r.Field<bool>("isSelect"));
+            if (rowCollect.Count() == 0) return;
+
+            //Использование только товаров МКО и ГСТ на кассах этих отделов
+            bool isMkoAndGastr = false;
+            DataTable dtTmp = SQL.getSettings("kmgs");
+
+            if (dtTmp != null && dtTmp.Rows.Count > 0)
+                try
+                {
+                    isMkoAndGastr = bool.Parse(dtTmp.Rows[0]["value"].ToString());
+                }
+                catch { isMkoAndGastr = false; }
+
+            // Получить список аквтиных товаров
+            Sprav.initListGrpSettings();
+            Sprav.initPromoGoods();
+
+            DataTable GoodsDbase1 = Config.hCntMain.getListGoodsDbase1(false);
+            DataTable GoodsVvoDbase1 = Config.hCntSecond.getListGoodsDbase1(true);
+            if (GoodsVvoDbase1 != null) { GoodsDbase1.Merge(GoodsVvoDbase1); GoodsVvoDbase1 = null; }
+            DataTable GooodUpdates = Config.hCntMainKassRealiz.getListGoodsKassRealiz();
+
+            DataTable dtGoodsToFile = new DataTable();
+            dtGoodsToFile.Columns.Add("ean", typeof(string));
+            dtGoodsToFile.Columns.Add("r_time", typeof(DateTime));
+            dtGoodsToFile.Columns.Add("name", typeof(string));
+            dtGoodsToFile.Columns.Add("price", typeof(decimal));
+            dtGoodsToFile.Columns.Add("grp", typeof(int));
+            dtGoodsToFile.Columns.Add("tax", typeof(int));
+            dtGoodsToFile.Columns.Add("id_tovar", typeof(string));
+            dtGoodsToFile.Columns.Add("kodVVO", typeof(string));
+            dtGoodsToFile.Columns.Add("firm", typeof(string));
+            dtGoodsToFile.Columns.Add("id_post", typeof(int));
+            dtGoodsToFile.Columns.Add("id_departments", typeof(int));
+            dtGoodsToFile.Columns.Add("id_goodsUpdate", typeof(int));
+            dtGoodsToFile.AcceptChanges();
+
+            dtTmp = dtGoodsToFile.Clone();
+
+
+            var query = from g in GoodsDbase1.AsEnumerable()
+                            //join k in GooodUpdates.AsEnumerable() on new { Q = g.Field<int>("id"), Z = g.Field<int>("id_otdel") } equals new { Q = k.Field<int>("id_tovar"), Z = k.Field<int>("id_department") }
+                        join k in GooodUpdates.AsEnumerable() on new { Q = g.Field<string>("ean").Trim() } equals new { Q = k.Field<string>("ean").Trim() }// into tempJoin
+                        //from kJoin in tempJoin.DefaultIfEmpty()
+                        select dtTmp.LoadDataRow(new object[]
+                                                       {
+
+                                                               g.Field<string>("ean"),
+                                                               k.Field<DateTime>("r_time"),
+                                                               k.Field<string>("name"),
+                                                               k.Field<decimal>("price"),
+                                                               k.Field<int>("grp"),
+                                                               k.Field<int>("tax"),
+                                                               g.Field<string>("id_tovar"),
+                                                               g.Field<string>("kodVVO"),
+                                                               g.Field<string>("firm"),
+                                                               g.Field<int?>("id_post"),
+                                                               k.Field<int>("id_departments"),
+                                                               k.Field<int>("id")
+                                                       }, false);
+
+            dtGoodsToFile = query.CopyToDataTable();
+            List<int> lVvo = new List<int>(new int[] { 3, 4 });
+            List<int> lMKO = new List<int>(new int[] { 1 });
+            List<int> lGst = new List<int>(new int[] { 2 });
+
+
+
+            foreach (DataRow row in rowCollect)
+            {
+                int id_gu = (int)row["id_gu"];
+                int id_TerminalType = (int)row["id_TerminalType"];
+                EnumerableRowCollection<DataRow> rowToFile;
+
+                if (isMkoAndGastr)
+                {
+                    if (lMKO.Contains(id_TerminalType))
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") == 1 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                    if (lGst.Contains(id_TerminalType))
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") == 2 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                    if (lVvo.Contains(id_TerminalType))
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") == 6 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                    else
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") != 6 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                }
+                else
+                {
+                    if (lVvo.Contains(id_TerminalType))
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") == 6 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                    else
+                    {
+                        rowToFile = dtGoodsToFile.AsEnumerable().Where(r => r.Field<int>("id_departments") != 6 && r.Field<int>("id_goodsUpdate") > id_gu);
+                    }
+                }
+
+                //Создание файла
+                Sprav.createSprav(rowToFile);
+
+                int maxValueGoodsUpdate = rowToFile.AsEnumerable().Max(r => r.Field<int>("id_goodsUpdate"));
+                SQL.setLastId((int)row["Number"], maxValueGoodsUpdate);
+                //Отправка на кассу
+                string _pathToSend = "\\" + (string)row["IP"] + (string)row["Path"];
+                try
+                {
+
+                    bool exists = true;
+                    try
+                    {
+                        bool completedIN = false;
+                        Thread t = new Thread(new ThreadStart(delegate ()
+                        {
+                            Directory.Exists(_pathToSend);
+                        }));
+                        t.Start();
+                        completedIN = t.Join(3000); //half a sec of timeout
+                        if (!completedIN) { exists = false; t.Abort(); }
+                        t = null;
+                    }
+                    catch { exists = false; }
+
+
+                    //if (File.Exists(_pathToSend + @"AIn"))
+                    //{
+                    //    if (File.Exists(path[i].ToString() + @"atol\AIn\AIn" + ids[i])) File.Delete(path[i].ToString() + @"atol\AIn\AIn" + ids[i]);
+                    //    File.Move(path[i].ToString() + @"atol\AIn\AIn", path[i].ToString() + @"atol\AIn\AIn" + ids[i]);
+                    //}
+                    //File.Copy(@"sprav\AInT", path[i].ToString() + @"atol\AIn\AIn");
+                    //File.Copy(@"sprav\sprav.txt", path[i].ToString() + @"atol\AIn\sprav.txt");
+
+                    //SQL.setLastId(terminals[i], newID);
+                    //oldids[i] = ids[i];
+
+                    DoOnUIThread(delegate ()
+                    {
+                        //rtbSprav.Text += $"{DateTime.Now.TimeOfDay.ToString().Substring(0, 8)} Касса {row["Number"]} + ": Справочник" + ids[i] + " отправлен;\n";
+                        rtbSprav.SelectionStart = rtbSprav.Text.Length;
+                    });
+                }
+                catch(Exception ex)
+                {
+                    DoOnUIThread(delegate ()
+                    {
+                        rtbSprav.Text += DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + ": Ошибка при отправке файлов;\n";
+                        rtbSprav.Text += ex.Message + ";";
+                        //writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i].ToString() + " : Ошибка при отправке файлов\n");
+                        writeLog(ex.Message);
+                        rtbSprav.SelectionStart = rtbSprav.Text.Length;
+                    });
+                }
+            }
+
+            /*
+            return;
 
             DataTable dt = SQL.getLastId();
             ids.Clear();
@@ -128,8 +265,7 @@ namespace xPosRealiz
                 if (use && sterms.Contains(dr["number"].ToString())) ids.Add(Convert.ToInt64(dr["lastID"].ToString()));
             }
 
-            Sprav.initListGrpSettings();
-            Sprav.initPromoGoods();
+
 
             for (int i = 0; i < path.Count(); i++)
             {
@@ -220,13 +356,7 @@ namespace xPosRealiz
                 }
             }
             if (lastID < newID) lastID++;
-            SQL.setLastId(0, lastID);
-            //if (btnResume.Enabled == false) spravYes = true;
-            //DoOnUIThread(delegate ()
-            //{
-            //    setTimeToTimer();
-            //});
-            //Thread.Sleep(30000);
+            SQL.setLastId(0, lastID);*/
         }
 
         private void bwSparv_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -235,7 +365,6 @@ namespace xPosRealiz
                 fLoad.Dispose();            
             blocker.RestoreControlEnabledState(this);
             setTimeToTimer();
-            //timerRealiz.Start();
         }
 
         private void writeLog(string message)
@@ -254,60 +383,7 @@ namespace xPosRealiz
         }
 
         #endregion
-               
-        //#region "Полный справочник"
-
-        //private void bwFullSprav_DoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    for (int i = 0; i < path.Count(); i++)
-        //    {
-        //        bool existsIN = false;
-        //        Thread tIN = new Thread(new ThreadStart(delegate ()
-        //        { existsIN = System.IO.Directory.Exists(path[i] + @"atol\AIn"); })
-        //         );
-        //        tIN.Start();
-        //        bool completedIN = tIN.Join(3000); //half a sec of timeout
-        //        if (!completedIN) { existsIN = false; tIN.Abort(); }
-        //        tIN = null;
-        //        try
-        //        {
-        //            if (!existsIN)
-        //            {
-        //                DoOnUIThread(delegate ()
-        //                {
-        //                    rtbSprav.Text += terminals[i] + " : Нет входящей папки Ain;\n";
-        //                    writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Нет входящей папки Ain;\n");
-        //                });
-        //                continue;
-        //            }
-        //            if (File.Exists(path[i].ToString() + @"atol\AIn\sprav.txt"))
-        //            {
-        //                DoOnUIThread(delegate ()
-        //                {
-        //                    rtbSprav.Text += terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n";
-        //                    writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i] + " : Предыдущий справочник не залит, либо нет обмена; \n");
-        //                });
-        //                continue;
-        //            }
-        //            File.Copy(@"sprav\FULL", path[i].ToString() + @"atol\AIn\AIn", true);
-        //            File.Copy(@"sprav\sprav.txt", path[i].ToString() + @"atol\AIn\sprav.txt");
-        //        }
-        //        catch { }
-        //        DoOnUIThread(delegate () { rtbSprav.Text += DateTime.Now.ToString() + " " + terminals[i] + " : Флаг отправлен; \n"; });
-
-        //    }
-        //    //Thread.Sleep(600000);
-        //}
-
-        //private void bwFullSprav_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //{
-        //    spravYes = true;
-        //    btnPause.Enabled = true;
-        //    btnResume.Enabled = false;
-        //}
-
-        //#endregion
-
+       
         #region "Таймер обновления"
         long timer = 60;
         private bool TimeStoper = false, UpdateTime = false;
@@ -325,6 +401,8 @@ namespace xPosRealiz
                     defaultValue = long.Parse(dtTmp.Rows[0]["value"].ToString());
                 }
                 catch { defaultValue = 60; }
+
+            defaultValue = 5;
 
             timer = defaultValue;
             tbDelay.Text = timer.ToString();

@@ -11,7 +11,7 @@ GO
 -- Create date: 22.12.2020
 -- Description:	Получение списка касс для справочника 
 -- =============================================
-CREATE PROCEDURE [sendFrontol].[GetSpravTerminal]		
+ALTER PROCEDURE [sendFrontol].[GetSpravTerminal]		
 AS
 BEGIN
 SET NOCOUNT ON
@@ -21,10 +21,12 @@ select
 	t.Number,
 	tt.Type as NameTerminalType,
 	t.id_TerminalType,
-	t.id_gu,
-	t.last_id_gu,
+	isnull(t.id_gu,0) as id_gu,
+	isnull(t.last_id_gu,0) as last_id_gu,
 	t.DateGoodsSend,
-	cast(0 as bit) as isSelect
+	cast(0 as bit) as isSelect,
+	t.IP,
+	t.Path
 from 
 	sendFrontol.s_Terminal t
 	inner join sendFrontol.s_TerminalType tt on tt.id =  t.id_TerminalType

@@ -310,11 +310,6 @@ namespace xPosRealiz
             string _vvo = "0"; //55
             string _vvo56 = "1";
 
-            //if (row["grp"].ToString().Equals("801") || row["grp"].ToString().Equals("802") || row["grp"].ToString().Equals("899"))
-            //{
-            //    _vvo = "1";
-            //    _vvo56 = "1";
-            //}
             if (row["grp"].ToString().Equals("714") )
             {
                 _vvo = "5";
@@ -327,9 +322,6 @@ namespace xPosRealiz
 
             if (dtPromoGoods != null && dtPromoGoods.Rows.Count > 0)
             {
-
-                //if (((string)row["id_tovar"]).Equals("104796"))
-                //{ }
 
                 EnumerableRowCollection<DataRow> rowCollect = dtPromoGoods.AsEnumerable()
                     .Where(r => r.Field<int>("id_tovar") == int.Parse(row["id_tovar"].ToString()));
@@ -348,5 +340,81 @@ namespace xPosRealiz
             return str;
         }
 
+        //
+
+        public static void createSprav(EnumerableRowCollection<DataRow> rowGoods)
+        {
+            StreamWriter file = null;
+
+            string filePath = Directory.GetCurrentDirectory() + @"\sprav\AInT";
+            if (File.Exists(filePath))
+                File.Delete(Directory.GetCurrentDirectory() + @"\sprav\AInT");
+
+            if (!Directory.Exists(@"sprav")) Directory.CreateDirectory(@"sprav");
+
+            DataTable dtDeps = SQL.getListDeps();
+            DataTable dtTovar = rowGoods.CopyToDataTable();
+
+            DataTable dtGrp = SQL.getListGrp();
+            try
+            {
+                file = new System.IO.StreamWriter(Directory.GetCurrentDirectory() + @"\sprav\AInT");
+
+                var grop = from row in dtTovar.AsEnumerable()
+                           group row by row.Field<int>("grp") into grp
+                           select new
+                           {
+                               grpID = grp.Key,
+                           };
+
+                file.WriteLine("##@@&&");
+                file.WriteLine("#");
+                file.WriteLine("$$$ADDQUANTITY");
+
+                foreach (DataRow rDep in dtDeps.Rows)
+                {
+                    file.WriteLine(inserGRP(rDep["id"].ToString(), rDep["name"].ToString(), ""));
+                }
+
+                foreach (var r in grop)
+                {
+                    DataRow[] row = dtGrp.Select("id = " + r.grpID.ToString());
+                    if (row.Count() > 0)
+                    {
+                        DataRow[] rDeps = dtDeps.Select("id = " + row[0]["id_otdel"].ToString());
+                        file.WriteLine(inserGRP(row[0]["id"].ToString(), row[0]["cname"].ToString(), rDeps[0]["id"].ToString()));
+                    }
+                }
+
+                dtTovar.DefaultView.Sort = "grp ASC, name ASC";
+
+                foreach (DataRowView row in dtTovar.DefaultView)
+                {
+                    file.WriteLine(inserTovar(row));
+                }
+
+                if (listPromoGoods.Count > 0)
+                {
+                    file.WriteLine("");
+                    file.WriteLine("");
+                    file.WriteLine("");
+                    file.WriteLine("$$$ADDASPECTREMAINS");
+                    foreach (string str in listPromoGoods)
+                    {
+                        file.WriteLine($"{str}");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                if (file != null)
+                    file.Close();
+            }
+
+        }
     }
 }
