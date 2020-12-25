@@ -41,6 +41,8 @@ namespace xPosRealiz
             if (words.Count() > 0)
                 Project.FillSettings(words);
 
+            //File.Copy(@"sprav\AInT", @"\\192.168.5.31\\Buffer Б5\\ОПр\\" + @"\AIn");
+
             Config.hCntMain = new Procedures(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
             Config.hCntMainKassRealiz = new Procedures(ConnectionSettings.GetServer("2"), ConnectionSettings.GetDatabase("2"), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
             Config.hCntSecond = new Procedures(ConnectionSettings.GetServer("3"), ConnectionSettings.GetDatabase("3"), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);

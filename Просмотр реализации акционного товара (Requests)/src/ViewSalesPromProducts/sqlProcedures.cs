@@ -201,7 +201,7 @@ namespace ViewSalesPromProducts
             ap.Add(ConnectionSettings.GetIdProgram());
             ap.Add(id_value);
 
-            DataTable dtResult = executeProcedure("[CheckVideoReg].[getSettings]",
+            DataTable dtResult = executeProcedure("[requests].[getSettings]",
                  new string[2] { "@id_prog", "@id_value" },
                  new DbType[2] { DbType.Int32, DbType.String }, ap);
 
@@ -216,7 +216,7 @@ namespace ViewSalesPromProducts
             ap.Add(value);
 
 
-            DataTable dtResult = executeProcedure("[CheckVideoReg].[setSettings]",
+            DataTable dtResult = executeProcedure("[requests].[setSettings]",
                  new string[3] { "@id_prog", "@id_value", "@value" },
                  new DbType[3] { DbType.Int32, DbType.String, DbType.String }, ap);
 

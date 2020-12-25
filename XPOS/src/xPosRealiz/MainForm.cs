@@ -203,9 +203,8 @@ namespace xPosRealiz
                 Sprav.createSprav(rowToFile);
 
                 int maxValueGoodsUpdate = rowToFile.AsEnumerable().Max(r => r.Field<int>("id_goodsUpdate"));
-                SQL.setLastId((int)row["Number"], maxValueGoodsUpdate);
                 //Отправка на кассу
-                string _pathToSend = "\\" + (string)row["IP"] + (string)row["Path"];
+                string _pathToSend = "\\\\" + (string)row["IP"] + (string)row["Path"];
                 try
                 {
 
@@ -230,8 +229,11 @@ namespace xPosRealiz
                     //    if (File.Exists(path[i].ToString() + @"atol\AIn\AIn" + ids[i])) File.Delete(path[i].ToString() + @"atol\AIn\AIn" + ids[i]);
                     //    File.Move(path[i].ToString() + @"atol\AIn\AIn", path[i].ToString() + @"atol\AIn\AIn" + ids[i]);
                     //}
-                    //File.Copy(@"sprav\AInT", path[i].ToString() + @"atol\AIn\AIn");
-                    //File.Copy(@"sprav\sprav.txt", path[i].ToString() + @"atol\AIn\sprav.txt");
+                    Console.WriteLine(@_pathToSend + "AIn");
+
+                    File.Copy(@"sprav\AInT", _pathToSend + "AIn",true);
+                    File.Copy(@"sprav\sprav.txt", _pathToSend + "sprav.txt", true);
+                    SQL.setLastId((int)row["Number"], maxValueGoodsUpdate, true);
 
                     //SQL.setLastId(terminals[i], newID);
                     //oldids[i] = ids[i];
@@ -246,11 +248,12 @@ namespace xPosRealiz
                 {
                     DoOnUIThread(delegate ()
                     {
+                        SQL.setLastId((int)row["Number"], maxValueGoodsUpdate, false);
                         rtbSprav.Text += DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + ": Ошибка при отправке файлов;\n";
                         rtbSprav.Text += ex.Message + ";";
                         //writeLog(DateTime.Now.TimeOfDay.ToString().Substring(0, 8) + " " + terminals[i].ToString() + " : Ошибка при отправке файлов\n");
                         writeLog(ex.Message);
-                        rtbSprav.SelectionStart = rtbSprav.Text.Length;
+                        rtbSprav.SelectionStart = rtbSprav.Text.Length;                       
                     });
                 }
             }
@@ -402,7 +405,7 @@ namespace xPosRealiz
                 }
                 catch { defaultValue = 60; }
 
-            defaultValue = 5;
+            //defaultValue = 5;
 
             timer = defaultValue;
             tbDelay.Text = timer.ToString();
@@ -525,6 +528,7 @@ namespace xPosRealiz
         #endregion
 
         #region ""
+        private bool _TimeStoperTmp=false;
         private void GetSpravTerminal()
         {
             dtSpravTerminal = SQL.GetSpravTerminal();
@@ -574,6 +578,7 @@ namespace xPosRealiz
                     fLoad.TopMost = false;
                     fLoad.Owner = this;
                     fLoad.Show();
+                    _TimeStoperTmp = TimeStoper;
                     TimeStoper = true;
                 });
 
@@ -583,7 +588,8 @@ namespace xPosRealiz
                 {
                     if (fLoad != null)
                         fLoad.Dispose();
-                    TimeStoper = false;
+                    //TimeStoper = false;
+                    TimeStoper = _TimeStoperTmp;
                     blocker.RestoreControlEnabledState(this);
                 });
             });

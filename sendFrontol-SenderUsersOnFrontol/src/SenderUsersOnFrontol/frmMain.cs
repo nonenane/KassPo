@@ -63,7 +63,7 @@ namespace SenderUsersOnFrontol
             frm.Text = "Добавить пользователя";
             if (DialogResult.OK == frm.ShowDialog())
             {
-                Config.SendUserToTerminal();
+                Config.SendUserToTerminal(this);
                 get_data();
 
                 if (!createFile(chbDelOldUser.Checked))
@@ -85,7 +85,7 @@ namespace SenderUsersOnFrontol
                 frm.setRow(dtData.DefaultView[dgvData.CurrentRow.Index]);
                 if (DialogResult.OK == frm.ShowDialog())
                 {
-                    Config.SendUserToTerminal();
+                    Config.SendUserToTerminal(this);
                     get_data();
                     if (!createFile(chbDelOldUser.Checked))
                     {
@@ -177,7 +177,7 @@ namespace SenderUsersOnFrontol
                     //  }
 
                     //newData = true;
-                    Config.SendUserToTerminal();
+                    Config.SendUserToTerminal(this);
                     get_data();
                     if (!createFile(chbDelOldUser.Checked))
                     {
@@ -892,6 +892,8 @@ namespace SenderUsersOnFrontol
             Config.Login = "kass";
             Config.Password = "kass";
             Config.hCntMain.getLogAndPass();
+            NewSendUserToTerminal();
+            return;
             //Config.Time = int.Parse(dtConfig.Select("id_value = 'Tim'")[0]["value"].ToString());
             //File.Create("AIn");
             frmSendData frm = new frmSendData();
@@ -975,10 +977,80 @@ namespace SenderUsersOnFrontol
             }
         }
 
+        public void NewSendUserToTerminal()
+        {
+            frmSendData frm = new frmSendData();
+            if (DialogResult.OK == frm.ShowDialog())
+            {
+                bool isDelUser = frm.GetDelUsers();
+
+                if (!createFile(isDelUser, true))
+                {
+                    MessageBox.Show("Необходимо завести пользователей!", "Информирование =^_^=", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                dtSendData = frm.setData();
+                int countRowAll = dtSendData.Rows.Count;
+                dtSendData.DefaultView.RowFilter = "isUsed = 1";
+                dtSendData = dtSendData.DefaultView.ToTable();
+                int countRowFinish = dtSendData.Rows.Count;
+
+                object isWriteSendData = countRowFinish == countRowAll;
+
+                if (!dtSendData.Columns.Contains("statusSend"))
+                    dtSendData.Columns.Add("statusSend", typeof(string));
+
+                Logging.StartFirstLevel(1139);
+                Logging.Comment("Состояние передачи");
+
+                Logging.Comment("Удалить старых пользователей :" + (isDelUser ? "Да" : "Нет"));
+
+                string _terminalList = "";
+
+                foreach (DataRow row in dtSendData.Rows)
+                {
+                    _terminalList += "," + row["Number"].ToString();
+                }
+                _terminalList = _terminalList.Substring(1);
+
+                Logging.Comment("Выбраны кассы: " + _terminalList);
+
+                if (!bwSend.IsBusy)
+                {
+                    cntOutEnb.SaveControlsEnabledState(this);
+                    cntOutEnb.SetControlsEnabled(this, false);
+
+                    frmLD.clearList();
+
+                    frmOutLoad = new Nwuram.Framework.UI.Forms.frmLoad("Отправка данных...");
+                    frmOutLoad.TopMost = false;
+                    frmOutLoad.Show();
+                    bwSend.RunWorkerAsync(isWriteSendData);
+                }               
+            }
+        }
+
         private void tbIP_TextChanged(object sender, EventArgs e)
         {
             FilterTerminal();
         }
 
+        private void dgvData_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            int width = 0;
+            foreach (DataGridViewColumn col in dgvData.Columns)
+            {
+                if (!col.Visible) continue;
+
+                if (col.Name.Equals(cFIO.Name))
+                {
+                    tbFIO.Location = new Point(dgvData.Location.X + 1 + width, tbFIO.Location.Y);
+                    tbFIO.Size = new Size(col.Width, tbFIO.Size.Height);
+                }
+
+                width += col.Width;
+            }
+        }
     }
 }

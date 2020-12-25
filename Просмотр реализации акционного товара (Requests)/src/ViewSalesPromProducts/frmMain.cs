@@ -9,6 +9,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Nwuram.Framework.Settings.Connection;
 using Nwuram.Framework.Settings.User;
+using Nwuram.Framework.Logging;
 
 namespace ViewSalesPromProducts
 {
@@ -80,6 +81,8 @@ namespace ViewSalesPromProducts
 
         private void btnPrintReport_Click(object sender, EventArgs e)
         {
+         
+
             FileInfo newFile = new FileInfo(Application.StartupPath + "\\Templates\\Report.xlsx");
 
             ExcelPackage pck = new ExcelPackage(newFile);
@@ -91,6 +94,14 @@ namespace ViewSalesPromProducts
 
             DataTable table = (DataTable)dgvMain.DataSource;
             DataTable filtered = table.DefaultView.ToTable();
+
+            Logging.StartFirstLevel(79);
+
+            Logging.Comment("Произведена выгрузка отчета со следующими параметрами");
+            Logging.Comment($"Отдел ID:{cmbOtdel.SelectedValue}; Наименование:{cmbOtdel.Text}");
+            Logging.Comment($"Кол-во записей:{filtered.Rows.Count}");
+            Logging.StopFirstLevel();
+
 
             int row = 8, col = 1;
             foreach (DataRow row_table in filtered.Rows)

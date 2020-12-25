@@ -71,14 +71,16 @@ namespace xPosRealiz
                 new DbType[] { }, ap);
         }
 
-        public static DataTable setLastId(int num, long id)
+        public static DataTable setLastId(int num, long id,bool isOK)
         {
             ap.Clear();
             ap.Add(num);
             ap.Add(id);
+            ap.Add(isOK);
+            ap.Add(Nwuram.Framework.Settings.User.UserSettings.User.Id);
             return sql.executeProcedure("[sendFrontol].[setLastID]",
-                new string[] { "@number","@lastID" },
-                new DbType[] { DbType.Int32, DbType.Int64 }, ap);
+                new string[4] { "@number","@lastID","@isOk","@id_user" },
+                new DbType[4] { DbType.Int32, DbType.Int64,DbType.Boolean,DbType.Int32 }, ap);
         }
 
         public static DataTable setJSprav(int terminal, long id)

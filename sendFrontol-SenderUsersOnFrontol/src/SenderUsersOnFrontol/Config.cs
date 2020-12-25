@@ -81,12 +81,17 @@ namespace SenderUsersOnFrontol
         public static string Folder = "";
         public static int Time = 0;
 
-        public static void SendUserToTerminal()
+        public static bool SendUserToTerminal(frmMain form)
         {
             if (DialogResult.Yes == MessageBox.Show(centralText("Список пользователей был изменён.\nОтправить список пользователей\nна кассы?\n"), "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
-            { 
-            
+            {
+                form.NewSendUserToTerminal();
+                return true;
+                //frmSendData frm = new frmSendData();
+                //return DialogResult.OK == frm.ShowDialog();
             }
+
+            return false;
         }
     }
 }

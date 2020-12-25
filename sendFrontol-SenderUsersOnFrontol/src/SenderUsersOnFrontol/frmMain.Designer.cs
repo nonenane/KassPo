@@ -47,7 +47,6 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.chbUn = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbSearch = new System.Windows.Forms.Label();
             this.tbLoadToFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbDateEdit = new System.Windows.Forms.TextBox();
@@ -63,7 +62,6 @@
             this.cCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.INN_Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbStatusSend = new System.Windows.Forms.TabPage();
-            this.chbDelUsers = new StrageCheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbDateSend = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -73,6 +71,7 @@
             this.cSPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbTerminals = new System.Windows.Forms.TabPage();
+            this.btTerminalSendUsers = new System.Windows.Forms.Button();
             this.pIsActive = new System.Windows.Forms.Panel();
             this.chbIsActive = new System.Windows.Forms.CheckBox();
             this.btTerminalUpdate = new System.Windows.Forms.Button();
@@ -84,16 +83,16 @@
             this.btTerminalEdit = new System.Windows.Forms.Button();
             this.btTerminalDel = new System.Windows.Forms.Button();
             this.dgvTerminal = new System.Windows.Forms.DataGridView();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.bwSend = new System.ComponentModel.BackgroundWorker();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tsLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btTerminalSendUsers = new System.Windows.Forms.Button();
             this.cTerNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTerType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTerIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTerChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTerDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.bwSend = new System.ComponentModel.BackgroundWorker();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chbDelUsers = new StrageCheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpUsers.SuspendLayout();
@@ -167,7 +166,6 @@
             this.tpUsers.Controls.Add(this.btnUpdate);
             this.tpUsers.Controls.Add(this.chbUn);
             this.tpUsers.Controls.Add(this.panel1);
-            this.tpUsers.Controls.Add(this.lbSearch);
             this.tpUsers.Controls.Add(this.tbLoadToFile);
             this.tpUsers.Controls.Add(this.label1);
             this.tpUsers.Controls.Add(this.tbDateEdit);
@@ -187,7 +185,7 @@
             // chbDelOldUser
             // 
             this.chbDelOldUser.AutoSize = true;
-            this.chbDelOldUser.Location = new System.Drawing.Point(32, 444);
+            this.chbDelOldUser.Location = new System.Drawing.Point(553, 432);
             this.chbDelOldUser.Name = "chbDelOldUser";
             this.chbDelOldUser.Size = new System.Drawing.Size(188, 17);
             this.chbDelOldUser.TabIndex = 19;
@@ -211,7 +209,7 @@
             // 
             this.chbUn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chbUn.AutoSize = true;
-            this.chbUn.Location = new System.Drawing.Point(32, 423);
+            this.chbUn.Location = new System.Drawing.Point(31, 432);
             this.chbUn.Name = "chbUn";
             this.chbUn.Size = new System.Drawing.Size(84, 17);
             this.chbUn.TabIndex = 17;
@@ -224,24 +222,15 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.BackColor = System.Drawing.Color.Yellow;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(5, 423);
+            this.panel1.Location = new System.Drawing.Point(4, 432);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(17, 17);
             this.panel1.TabIndex = 16;
             // 
-            // lbSearch
-            // 
-            this.lbSearch.AutoSize = true;
-            this.lbSearch.Location = new System.Drawing.Point(167, 9);
-            this.lbSearch.Name = "lbSearch";
-            this.lbSearch.Size = new System.Drawing.Size(39, 13);
-            this.lbSearch.TabIndex = 15;
-            this.lbSearch.Text = "Поиск";
-            // 
             // tbLoadToFile
             // 
             this.tbLoadToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbLoadToFile.Location = new System.Drawing.Point(747, 423);
+            this.tbLoadToFile.Location = new System.Drawing.Point(747, 424);
             this.tbLoadToFile.Name = "tbLoadToFile";
             this.tbLoadToFile.Size = new System.Drawing.Size(120, 32);
             this.tbLoadToFile.TabIndex = 14;
@@ -253,7 +242,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(270, 427);
+            this.label1.Location = new System.Drawing.Point(166, 434);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 13);
             this.label1.TabIndex = 13;
@@ -262,7 +251,7 @@
             // tbDateEdit
             // 
             this.tbDateEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbDateEdit.Location = new System.Drawing.Point(371, 423);
+            this.tbDateEdit.Location = new System.Drawing.Point(267, 430);
             this.tbDateEdit.MaxLength = 150;
             this.tbDateEdit.Name = "tbDateEdit";
             this.tbDateEdit.ReadOnly = true;
@@ -282,7 +271,7 @@
             // 
             this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btAdd.Image = global::SenderUsersOnFrontol.Properties.Resources.document_add;
-            this.btAdd.Location = new System.Drawing.Point(873, 423);
+            this.btAdd.Location = new System.Drawing.Point(873, 424);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(32, 32);
             this.btAdd.TabIndex = 9;
@@ -294,7 +283,7 @@
             // 
             this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btEdit.Image = global::SenderUsersOnFrontol.Properties.Resources.edit;
-            this.btEdit.Location = new System.Drawing.Point(911, 423);
+            this.btEdit.Location = new System.Drawing.Point(911, 424);
             this.btEdit.Name = "btEdit";
             this.btEdit.Size = new System.Drawing.Size(32, 32);
             this.btEdit.TabIndex = 10;
@@ -306,7 +295,7 @@
             // 
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btDelete.Image = global::SenderUsersOnFrontol.Properties.Resources.document_delete;
-            this.btDelete.Location = new System.Drawing.Point(949, 423);
+            this.btDelete.Location = new System.Drawing.Point(949, 424);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(32, 32);
             this.btDelete.TabIndex = 11;
@@ -357,6 +346,7 @@
             this.dgvData.TabIndex = 0;
             this.dgvData.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentDoubleClick);
             this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
+            this.dgvData.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvData_ColumnWidthChanged);
             this.dgvData.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.DgvData_RowPostPaint);
             this.dgvData.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.DgvData_RowPrePaint);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
@@ -417,18 +407,6 @@
             this.tbStatusSend.TabIndex = 1;
             this.tbStatusSend.Text = "Отправка на кассы";
             this.tbStatusSend.UseVisualStyleBackColor = true;
-            // 
-            // chbDelUsers
-            // 
-            this.chbDelUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chbDelUsers.AutoSize = true;
-            this.chbDelUsers.Location = new System.Drawing.Point(493, 430);
-            this.chbDelUsers.Name = "chbDelUsers";
-            this.chbDelUsers.Size = new System.Drawing.Size(188, 17);
-            this.chbDelUsers.TabIndex = 17;
-            this.chbDelUsers.Text = "Удалить старых пользователей";
-            this.chbDelUsers.UseVisualStyleBackColor = true;
-            this.chbDelUsers.Unchecked += new System.EventHandler(this.strageCheckBox1_Unchecked);
             // 
             // label2
             // 
@@ -548,7 +526,18 @@
             this.tbTerminals.Size = new System.Drawing.Size(989, 467);
             this.tbTerminals.TabIndex = 2;
             this.tbTerminals.Text = "Кассы";
-            this.tbTerminals.UseVisualStyleBackColor = true;            
+            this.tbTerminals.UseVisualStyleBackColor = true;
+            // 
+            // btTerminalSendUsers
+            // 
+            this.btTerminalSendUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btTerminalSendUsers.Location = new System.Drawing.Point(861, 408);
+            this.btTerminalSendUsers.Name = "btTerminalSendUsers";
+            this.btTerminalSendUsers.Size = new System.Drawing.Size(120, 36);
+            this.btTerminalSendUsers.TabIndex = 23;
+            this.btTerminalSendUsers.Text = "Отправить пользователей";
+            this.btTerminalSendUsers.UseVisualStyleBackColor = true;
+            this.btTerminalSendUsers.Click += new System.EventHandler(this.btTerminalSendUsers_Click);
             // 
             // pIsActive
             // 
@@ -700,40 +689,6 @@
             this.dgvTerminal.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTerminal_RowPrePaint);
             this.dgvTerminal.SelectionChanged += new System.EventHandler(this.dgvTerminal_SelectionChanged);
             // 
-            // bwSend
-            // 
-            this.bwSend.WorkerReportsProgress = true;
-            this.bwSend.WorkerSupportsCancellation = true;
-            this.bwSend.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSend_DoWork);
-            this.bwSend.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSend_RunWorkerCompleted);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 520);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(997, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // tsLabel
-            // 
-            this.tsLabel.Name = "tsLabel";
-            this.tsLabel.Size = new System.Drawing.Size(109, 17);
-            this.tsLabel.Text = "toolStripStatusLabel1";
-            // 
-            // btTerminalSendUsers
-            // 
-            this.btTerminalSendUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btTerminalSendUsers.Location = new System.Drawing.Point(861, 408);
-            this.btTerminalSendUsers.Name = "btTerminalSendUsers";
-            this.btTerminalSendUsers.Size = new System.Drawing.Size(120, 36);
-            this.btTerminalSendUsers.TabIndex = 23;
-            this.btTerminalSendUsers.Text = "Отправить пользователей";
-            this.btTerminalSendUsers.UseVisualStyleBackColor = true;
-            this.btTerminalSendUsers.Click += new System.EventHandler(this.btTerminalSendUsers_Click);
-            // 
             // cTerNum
             // 
             this.cTerNum.DataPropertyName = "Number";
@@ -768,6 +723,41 @@
             this.cTerDate.HeaderText = "Дата отправки пользователей";
             this.cTerDate.Name = "cTerDate";
             this.cTerDate.ReadOnly = true;
+            // 
+            // bwSend
+            // 
+            this.bwSend.WorkerReportsProgress = true;
+            this.bwSend.WorkerSupportsCancellation = true;
+            this.bwSend.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSend_DoWork);
+            this.bwSend.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSend_RunWorkerCompleted);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 520);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(997, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsLabel
+            // 
+            this.tsLabel.Name = "tsLabel";
+            this.tsLabel.Size = new System.Drawing.Size(109, 17);
+            this.tsLabel.Text = "toolStripStatusLabel1";
+            // 
+            // chbDelUsers
+            // 
+            this.chbDelUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbDelUsers.AutoSize = true;
+            this.chbDelUsers.Location = new System.Drawing.Point(493, 430);
+            this.chbDelUsers.Name = "chbDelUsers";
+            this.chbDelUsers.Size = new System.Drawing.Size(188, 17);
+            this.chbDelUsers.TabIndex = 17;
+            this.chbDelUsers.Text = "Удалить старых пользователей";
+            this.chbDelUsers.UseVisualStyleBackColor = true;
+            this.chbDelUsers.Unchecked += new System.EventHandler(this.strageCheckBox1_Unchecked);
             // 
             // frmMain
             // 
@@ -837,7 +827,6 @@
         private System.Windows.Forms.TextBox tbDateSend;
         private System.Windows.Forms.Button tbLoadToFile;
         private StrageCheckBox chbDelUsers;
-        private System.Windows.Forms.Label lbSearch;
         private System.Windows.Forms.DataGridViewTextBoxColumn cId;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFIO;
