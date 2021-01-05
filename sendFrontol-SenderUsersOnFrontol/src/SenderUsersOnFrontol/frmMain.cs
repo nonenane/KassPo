@@ -451,8 +451,14 @@ namespace SenderUsersOnFrontol
 
             //Запись времени заливки данных на кассу
             //Config.hCntMain.setDateSend();
+
+           DataTable dtDataValidateTerminal = Config.hCntMain.getTerminal();
+            bool isShowMsg = false;
             foreach (DataRow row in dtSendData.Rows)
             {
+
+                if (dtDataValidateTerminal.AsEnumerable().Where(r => r.Field<int>("id") == (int)row["id"]).Count() == 0) isShowMsg = true;
+
                 Config.IP = row["IP"].ToString();
                 Config.Folder = row["Path"].ToString();
                 int status = connect();
@@ -495,6 +501,11 @@ namespace SenderUsersOnFrontol
             //Запись времени заливки данных на кассу
             if (isWriteSendData)
                 Config.hCntMain.setDateSend();
+
+            if (isShowMsg)
+            {
+                MessageBox.Show("Некоторые кассы были удалены", "Инфомирование", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void bwSend_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

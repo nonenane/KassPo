@@ -32,15 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>003store_120746.ico</ApplicationIcon>
+    <ApplicationIcon>fire_sale_hot_percentage_ecommerce_commerce_icon_153142.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\frameWork_mew\Framework\bin\Debug\EPPlus.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Framework">
-      <HintPath>..\..\..\..\..\..\frameWork_mew\Framework\bin\Debug\Framework.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="003store_120746.ico" />
+    <Content Include="fire_sale_hot_percentage_ecommerce_commerce_icon_153142.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

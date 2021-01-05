@@ -36,13 +36,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus">
-      <HintPath>..\..\..\DLL\EPPlus.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Framework">
-      <HintPath>..\..\..\DLL\Framework.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\Framework.dll</HintPath>
     </Reference>
     <Reference Include="IPAddressControlLib">
-      <HintPath>..\..\..\DLL\IPAddressControlLib.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\IPAddressControlLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
